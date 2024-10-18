@@ -3,22 +3,23 @@ import {
   useContext,
   ReactNode,
   useState,
-  useEffect,
 } from "react";
 import { ReadingTest } from "@/types/reading";
 import { useTestContext } from "./TestContext";
 import { attemptTest, fetchAttempt } from "@/services/testService";
+import { toast } from "sonner";
 
 interface ReadingContextType {
   readingData: ReadingTest | undefined;
   userAnswers: number[];
   setUserAnswer: (index: number, answer: number) => void;
+  fetchReadingData: () => void;
 }
 
 const ReadingContext = createContext<ReadingContextType | undefined>(undefined);
 
 export const ReadingProvider = ({ children }: { children: ReactNode }) => {
-  const { currentTest } = useTestContext();
+  const { currentTest, attemptId, setAttemptId, moduleIds, attemptTestData, setAttemptTestData } = useTestContext();
   const [readingData, setReadingData] = useState<ReadingTest>();
 
   const [userAnswers, setUserAnswers] = useState<number[]>([]);
@@ -29,27 +30,32 @@ export const ReadingProvider = ({ children }: { children: ReactNode }) => {
     setUserAnswers(updatedAnswers);
   };
 
-  useEffect(() => {
-    const fetchListeningData = async () => {
-      const module = currentTest?.modules.find(
-        (module) => module.type === "Reading"
-      );
-      if (module) {
-        setUserAnswers(new Array(module.pages.length).fill(-1));
-      }
+  const fetchReadingData = async () => {
+    const module = currentTest?.modules.find(
+      (module) => module.type === "Reading"
+    );
+    if (module) {
+      setUserAnswers(new Array(module.pages.length).fill(-1));
+    }
+    try {
       if (currentTest && module) {
-        const { _id } = await attemptTest(currentTest?._id, module?._id);
-        const { modules } = await fetchAttempt(_id);
-        setReadingData(modules[0]);
+        let currentAttempt = attemptId;
+        if (!currentAttempt) {
+          const { _id } = await attemptTest(currentTest?._id, moduleIds);
+          setAttemptId(_id);
+          currentAttempt = _id;
+        }
+        const data = await fetchAttempt(currentAttempt || "", "Reading", attemptTestData, setAttemptTestData);
+        setReadingData(data);
       }
-    };
-
-    fetchListeningData();
-  }, [currentTest]);
+    } catch {
+      toast.error("Something went wrong!");
+    }
+  };
 
   return (
     <ReadingContext.Provider
-      value={{ readingData, userAnswers, setUserAnswer }}
+      value={{ readingData, userAnswers, setUserAnswer, fetchReadingData }}
     >
       {children}
     </ReadingContext.Provider>

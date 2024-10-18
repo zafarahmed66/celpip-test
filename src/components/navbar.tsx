@@ -8,19 +8,18 @@ import {
 } from "@/components/ui/select";
 import { useAuth } from "@/context/AuthContext";
 import { useTestContext } from "@/context/TestContext";
-import { getAllTests } from "@/services/testService";
 import { useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
-  const { tests, setCurrentTest } = useTestContext();
+  const { tests, setCurrentTest, fetchTests } = useTestContext();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getAllTests();
-  }, []);
+useEffect(() => {
+  fetchTests();
+}, [fetchTests]);
 
   const handleChange = (id: string) => {
     const currentTest = tests?.find((test) => test?._id === id) && tests[0];
@@ -37,6 +36,7 @@ const Navbar = () => {
 
   const testItems = useMemo(
     () =>
+      
       tests?.map((test) => (
         <SelectItem key={test._id} value={test._id}>
           {test.title}
@@ -56,8 +56,8 @@ const Navbar = () => {
             />
           </Link>
         </div>
-        <div className="items-center flex-1 hidden gap-2 md:flex ">
-          <p className="text-sm text-[#262161] font-semibold">
+        <div className="flex items-center flex-1 gap-2 ">
+          <p className="hidden md:block text-sm text-[#262161] font-semibold">
             Selected Product:{" "}
           </p>
           <Select onValueChange={handleChange}>

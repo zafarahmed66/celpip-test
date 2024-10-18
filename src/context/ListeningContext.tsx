@@ -1,18 +1,14 @@
-import {
-  createContext,
-  useContext,
-  ReactNode,
-  useState,
-  useEffect,
-} from "react";
+import { createContext, useContext, ReactNode, useState } from "react";
 import { ListeningTest } from "@/types/listening";
 import { useTestContext } from "./TestContext";
 import { attemptTest, fetchAttempt } from "@/services/testService";
+import { toast } from "sonner";
 
 interface ListeningContextType {
   listeningData: ListeningTest | undefined;
   userAnswers: number[];
   setUserAnswer: (index: number, answer: number) => void;
+  fetchListeningData: () => void;
 }
 
 const ListeningContext = createContext<ListeningContextType | undefined>(
@@ -20,7 +16,7 @@ const ListeningContext = createContext<ListeningContextType | undefined>(
 );
 
 export const ListeningProvider = ({ children }: { children: ReactNode }) => {
-  const { currentTest } = useTestContext();
+  const { currentTest, setAttemptId, attemptId, moduleIds, attemptTestData, setAttemptTestData} = useTestContext();
   const [listeningData, setListeningData] = useState<ListeningTest>();
   const [userAnswers, setUserAnswers] = useState<number[]>([]);
 
@@ -30,27 +26,35 @@ export const ListeningProvider = ({ children }: { children: ReactNode }) => {
     setUserAnswers(updatedAnswers);
   };
 
-  useEffect(() => {
-    const fetchListeningData = async () => {
-      const module = currentTest?.modules.find(
-        (module) => module.type === "Listening"
-      );
-      if (module) {
-        setUserAnswers(new Array(module.pages.length).fill(-1));
-      }
-      if (currentTest && module) {
-        const { _id } = await attemptTest(currentTest?._id, module?._id);
-        const { modules } = await fetchAttempt(_id);
-        setListeningData(modules[0]);
-      }
-    };
 
-    fetchListeningData();
-  }, [currentTest]);
+
+  const fetchListeningData = async () => {
+    const module = currentTest?.modules.find(
+      (module) => module.type === "Listening"
+    );
+    if (module) {
+      setUserAnswers(new Array(module.pages.length).fill(-1));
+    }
+    try {
+      if (currentTest && module) {
+        let currentAttempt = attemptId;
+        if (!currentAttempt) {
+          const { _id } = await attemptTest(currentTest?._id, moduleIds);
+          setAttemptId(_id);
+          currentAttempt = _id;
+        }
+
+          const data = await fetchAttempt(currentAttempt || "", "Listening", attemptTestData, setAttemptTestData);
+          setListeningData(data);
+      }
+    } catch {
+      toast.error("Something went wrong!");
+    }
+  };
 
   return (
     <ListeningContext.Provider
-      value={{ listeningData, userAnswers, setUserAnswer }}
+      value={{ listeningData, userAnswers, setUserAnswer, fetchListeningData }}
     >
       {children}
     </ListeningContext.Provider>

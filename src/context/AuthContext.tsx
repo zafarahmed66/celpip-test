@@ -13,6 +13,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  
   useEffect(() => {
     const initializeAuth = () => {
       const token = AuthService.getToken();

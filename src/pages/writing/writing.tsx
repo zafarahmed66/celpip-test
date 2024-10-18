@@ -7,15 +7,20 @@ import { Navigate, useLocation, useParams } from "react-router-dom";
 import SimpleQuesion from "./components/simple-question";
 import { ScenarioSection } from "./components/scenario-section";
 import { MCQQuestion } from "./components/mcq-question";
+import { useEffect } from "react";
 
 export default function Writing() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
 
-  const { writingData } = useWritingContext();
+  const { writingData, fetchWritingData } = useWritingContext();
+
+  useEffect(() => {
+    fetchWritingData();
+  }, [])
 
   if (!writingData) {
-    return <div>Loading...</div>; // Handle loading state
+    return <div>Loading...</div>; 
   }
 
   const id = parseInt(sectionId!);
@@ -36,7 +41,7 @@ export default function Writing() {
 
   return (
     <CardLayout
-      timer={section.duration}
+      timer={section.duration ? section.duration : undefined}
       title={section.title}
       prevLink={pathname}
       nextLink={next}
@@ -47,7 +52,7 @@ export default function Writing() {
           !section.questionSets &&
           section.instructions.length > 0 && (
             <>
-              <InsructionHeader text={section.instructions[0]?.text || ""} />
+           {section.instructions[0].text &&   <InsructionHeader text={section.instructions[0]?.text || ""} />}
               {section.instructions[0]?.video && (
                 <InstructionVideo videoSrc={section.instructions[0].video} />
               )}

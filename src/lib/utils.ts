@@ -1,5 +1,3 @@
-import listeningTestMockData from "@/data/listeningTest";
-import { readingTestMockData } from "@/data/readingTest";
 import { ListeningTest, Question } from "@/types/listening";
 import { ReadingTest, Question as ReadingQuestion } from "@/types/reading";
 import { clsx, type ClassValue } from "clsx";
@@ -140,37 +138,9 @@ export function getActualQuestionIndexReading(
   return null;
 }
 
-export const getTotalQuestionsInPart = (partNumber: number) => {
-  const part = listeningTestMockData.parts.find(
-    (p) => p.partNumber === partNumber
-  );
 
-  if (!part) {
-    return `Part ${partNumber} not found.`;
-  }
 
-  const totalQuestions = part.sections.reduce(
-    (acc, section) => acc + section.questions.length,
-    0
-  );
 
-  return totalQuestions;
-};
-
-export function getNextExerciseId(currentExerciseId: string): string | null {
-  const currentExerciseIndex = readingTestMockData.exercise.findIndex(
-    (exercise) => exercise.id === currentExerciseId
-  );
-
-  if (
-    currentExerciseIndex !== -1 &&
-    currentExerciseIndex < readingTestMockData.exercise.length - 1
-  ) {
-    return readingTestMockData.exercise[currentExerciseIndex + 1].id;
-  }
-
-  return null;
-}
 
 // export function getNextSpeakingExerciseId(
 //   currentExerciseId: string

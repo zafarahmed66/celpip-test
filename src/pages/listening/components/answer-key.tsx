@@ -66,6 +66,7 @@ export default function ListeningAnswerKeyPage() {
                 currentIndex = 1;
               }
 
+
               return (
                 <>
                   {prevItem && item.title !== prevItem.title && (
@@ -107,7 +108,7 @@ export default function ListeningAnswerKeyPage() {
                                 className="inline-block ml-2 text-green-500"
                               />
                             ) : (
-                              <X
+                            answerIndex >=0 &&  <X
                                 size={20}
                                 className="inline-block ml-2 text-red-500"
                               />
@@ -122,7 +123,7 @@ export default function ListeningAnswerKeyPage() {
                                 className="inline-block ml-2 text-green-500"
                               />
                             ) : (
-                              <X
+                            answerIndex >= 0 &&  <X
                                 size={20}
                                 className="inline-block ml-2 text-red-500"
                               />

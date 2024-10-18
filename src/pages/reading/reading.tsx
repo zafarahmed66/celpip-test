@@ -12,25 +12,17 @@ import { QuestionSet } from "./components/question-set";
 export default function Reading() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
-  const { readingData } = useReadingContext();
-
+  const { readingData, fetchReadingData } = useReadingContext();
   const id = parseInt(sectionId!);
   const section = readingData?.pages[id - 1];
-  if (!section) {
-    return (
-      <Navigate
-        to={"/reading/answer-key"}
-        state={{
-          prevPage: pathname,
-        }}
-      />
-    );
-  }
-
+  
   const [timer, setTimer] = useState<number | undefined>(
-    section.duration || undefined
+    section?.duration || undefined
   );
 
+  useEffect(() => {
+    fetchReadingData();
+  }, [])
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((prev) => {
@@ -46,7 +38,22 @@ export default function Reading() {
     return () => clearInterval(interval);
   }, []);
 
+  if (!readingData) {
+    return <div>Loading...</div>
+  }
+
   const next = `/reading/${id + 1}`;
+
+  if (!section) {
+    return (
+      <Navigate
+        to={"/reading/answer-key"}
+        state={{
+          prevPage: pathname,
+        }}
+      />
+    );
+  }
 
   return (
     <CardLayout

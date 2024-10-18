@@ -46,8 +46,7 @@ export default function ReadingAnswerKeyPage() {
           <TableBody>
             {data.map((item, index) => {
               const answerIndex = userAnswers[index];
-              const userAnswer =
-                item.question.choices && item.question.choices?.[answerIndex];
+              const userAnswer = item.question.choices?.[answerIndex];
 
               const correctAnswer = item.question.correctAnswer;
               let isCorrect = false;

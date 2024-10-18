@@ -10,7 +10,9 @@ export interface LoginCredentials {
 }
 
 export interface SignupCredentials extends LoginCredentials {
-  confirmPassword: string;
+  firstName: string;
+  lastName?: string;
+  confirmPassword?: string;
 }
 
 export interface AuthContextType {
@@ -23,5 +25,7 @@ export interface AuthContextType {
 export interface FormErrors {
   email?: string;
   password?: string;
+  firstName?: string;
+  lastName?: string;
   confirmPassword?: string;
 }

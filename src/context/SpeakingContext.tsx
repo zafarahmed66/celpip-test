@@ -3,16 +3,17 @@ import {
   useContext,
   ReactNode,
   useState,
-  useEffect,
 } from "react";
 import { SpeakingTest } from "@/types/speaking";
 import { useTestContext } from "./TestContext";
 import { attemptTest, fetchAttempt } from "@/services/testService";
+import { toast } from "sonner";
 
 interface SpeakingContextType {
   speakingData: SpeakingTest | undefined;
   startAudio: string;
   endAudio: string;
+  fetchSpeakingData: () => void;
 }
 
 const SpeakingContext = createContext<SpeakingContextType | undefined>(
@@ -20,31 +21,36 @@ const SpeakingContext = createContext<SpeakingContextType | undefined>(
 );
 
 export const SpeakingProvider = ({ children }: { children: ReactNode }) => {
-  const { currentTest } = useTestContext();
+  const { currentTest, attemptId, setAttemptId, moduleIds, attemptTestData, setAttemptTestData } = useTestContext();
   const [speakingData, setSpeakingData] = useState<SpeakingTest>();
   const startAudio =
     "https://instructionalproducts.paragontesting.ca/InstructionalProducts/Areas/FreeOnlineSampleTest/Content/audio/S_Speaking_Start.ogg";
   const endAudio =
     "https://instructionalproducts.paragontesting.ca/InstructionalProducts/Areas/FreeOnlineSampleTest/Content/audio/S_Speaking_Stop.ogg";
 
-  useEffect(() => {
-    const fetchListeningData = async () => {
+    const fetchSpeakingData = async () => {
       const module = currentTest?.modules.find(
         (module) => module.type === "Speaking"
       );
 
-      if (currentTest && module) {
-        const { _id } = await attemptTest(currentTest?._id, module?._id);
-        const { modules } = await fetchAttempt(_id);
-        setSpeakingData(modules[0]);
+      try {
+        if (currentTest && module) {
+          let currentAttempt = attemptId;
+          if (!currentAttempt) {
+            const { _id } = await attemptTest(currentTest?._id, moduleIds);
+            setAttemptId(_id);
+            currentAttempt = _id;
+          }
+          const data = await fetchAttempt(currentAttempt || "", "Speaking", attemptTestData, setAttemptTestData);
+          setSpeakingData(data);
+        }
+      } catch {
+        toast.error("Something went wrong!");
       }
     };
 
-    fetchListeningData();
-  }, [currentTest]);
-
   return (
-    <SpeakingContext.Provider value={{ speakingData, startAudio, endAudio }}>
+    <SpeakingContext.Provider value={{ speakingData, startAudio, endAudio, fetchSpeakingData }}>
       {children}
     </SpeakingContext.Provider>
   );

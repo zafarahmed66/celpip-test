@@ -19,6 +19,7 @@ import Dashboard from "./pages/dashboard";
 import AuthForm from "./pages/auth/auth";
 import ProtectedRoute from "./pages/protected-route";
 import PublicRoute from "./pages/public-route";
+import { writingTestData } from "./data/writingTest";
 
 const router = createBrowserRouter([
   {
@@ -95,8 +96,8 @@ const router = createBrowserRouter([
         path: "/writing/end-page",
         element: (
           <EndPage
-            title={readingTestMockData.endPage.title}
-            instructions={readingTestMockData.endPage.instruction}
+            title={writingTestData.endPage.title}
+            instructions={writingTestData.endPage.instruction}
             nextLink="/speaking/1"
           />
         ),

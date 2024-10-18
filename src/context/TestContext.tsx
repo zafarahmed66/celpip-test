@@ -1,13 +1,18 @@
-// TestContext.tsx
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Test } from "@/types/test";
+import { AttemptTest, Test } from "@/types/test";
 import { getAllTests } from "@/services/testService";
 
 interface TestContextType {
-  tests: Test[] | null;
+  tests: Test[];
   currentTest: Test | null;
   setTests: (test: Test[]) => void;
   setCurrentTest: (test: Test) => void;
+  fetchTests: () => void;
+  attemptId: string | null;
+  setAttemptId: (id: string) => void;
+  moduleIds: string[];
+  attemptTestData: AttemptTest | null;
+  setAttemptTestData: (test: AttemptTest) => void;
 }
 
 const TestContext = createContext<TestContextType | undefined>(undefined);
@@ -15,16 +20,35 @@ const TestContext = createContext<TestContextType | undefined>(undefined);
 export const TestProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [tests, setTests] = useState<Test[] | null>(null);
+  const [tests, setTests] = useState<Test[]>([]); 
+  const [attemptId, setAttemptId] = useState < string | null>(null); 
   const [currentTest, setCurrentTest] = useState<Test | null>(null);
+  const [attemptTestData, setAttemptTestData] = useState<AttemptTest | null>(null);
+  const [moduleIds, setModuleIds] = useState<string[]>([]);
+
+  const fetchTests = async () => {
+    if (tests.length === 0) {
+      try {
+        const data = await getAllTests();
+        setTests(data.result.data);
+      } catch (error) {
+        console.error("Failed to fetch tests", error);
+      }
+    }
+  };
 
   useEffect(() => {
-    const fetchTests = async () => {
-      const data = await getAllTests();
-      setTests(data.result.data);
+    const getModuleIds = (): string[] => {
+      if (currentTest) {
+        return currentTest.modules.map((module) => module._id);
+      }
+      return [];
     };
-    fetchTests();
-  }, []);
+
+    const ids = getModuleIds();
+    setModuleIds(ids);
+  }, [currentTest])
+
 
   return (
     <TestContext.Provider
@@ -33,6 +57,12 @@ export const TestProvider: React.FC<{ children: React.ReactNode }> = ({
         currentTest,
         setTests,
         setCurrentTest,
+        fetchTests,
+        attemptId,
+        setAttemptId,
+        moduleIds,
+        attemptTestData, 
+        setAttemptTestData
       }}
     >
       {children}

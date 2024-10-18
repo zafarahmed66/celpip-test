@@ -7,12 +7,17 @@ import { Navigate, useLocation, useParams } from "react-router-dom";
 import SpeakingTest from "./components/speaking-test";
 import DescribingImage from "./components/describing-image";
 import ComparingImage from "./components/comparing-image";
+import { useEffect } from "react";
 
 export default function Speaking() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
 
-  const { speakingData } = useSpeakingContext();
+  const { speakingData, fetchSpeakingData } = useSpeakingContext();
+
+  useEffect(() => {
+    fetchSpeakingData();
+  }, [])
 
   if (!speakingData) return <div>Loading...</div>;
 
@@ -34,8 +39,8 @@ export default function Speaking() {
 
   return (
     <CardLayout
-      recordingTime={section.recordingTime}
-      timer={section.prepTime}
+      recordingTime={section.recordingTime ? section.recordingTime : undefined}
+      timer={section.prepTime ? section.prepTime : undefined}
       title={section.title}
       prevLink={pathname}
       nextLink={next}

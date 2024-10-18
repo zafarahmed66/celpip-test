@@ -26,6 +26,8 @@ export default function AuthForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<SignupCredentials>({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -48,6 +50,10 @@ export default function AuthForm() {
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
+
+    if (isSignUp && !formData.firstName) {
+      newErrors.firstName = "First name is required"
+    }
 
     if (!formData.email) {
       newErrors.email = "Email is required";
@@ -74,13 +80,34 @@ export default function AuthForm() {
 
     if (!validateForm()) return;
 
+
+
     setIsLoading(true);
     try {
-      const endpoint = isSignUp ? "/auth/signup" : "/auth/login";
-      const credentials: LoginCredentials = {
-        email: formData.email,
-        password: formData.password,
-      };
+      const endpoint = isSignUp ? "/auth/register" : "/auth/login";
+      let credentials: LoginCredentials | SignupCredentials;
+      if (isSignUp) {
+        credentials = {
+          firstName: formData.firstName,
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+        };
+
+        if (formData.lastName) {
+          credentials.lastName = formData.lastName;
+        }
+        
+      } else {
+        credentials = {
+          email: formData.email,
+          password: formData.password,
+        };
+      }
+
+      
+
+      
 
       const { data } = await apiClient.post(endpoint, credentials);
 
@@ -107,6 +134,8 @@ export default function AuthForm() {
     setIsSignUp(!isSignUp);
     setErrors({});
     setFormData({
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -123,6 +152,35 @@ export default function AuthForm() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+         {isSignUp &&   <div className="grid grid-cols-2 gap-2">
+              <div className="space-y-2">
+                <Label className="text-xs text-gray-500" htmlFor="email">
+                  First Name
+                </Label>
+                <Input
+                  id="firstName"
+                  type="text"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  className={errors.firstName ? "border-red-500" : ""}
+                />
+                {errors.firstName && (
+                  <p className="text-xs text-red-500">{errors.firstName}</p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs text-gray-500" htmlFor="email">
+                  Last Name (Optional)
+                </Label>
+                <Input
+                  id="lastName"
+                  type="text"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                />
+                
+              </div>
+            </div>}
             <div className="space-y-2">
               <Label className="text-xs text-gray-500" htmlFor="email">
                 Email or mobile phone number
