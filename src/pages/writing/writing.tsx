@@ -7,29 +7,48 @@ import { Navigate, useLocation, useParams } from "react-router-dom";
 import SimpleQuesion from "./components/simple-question";
 import { ScenarioSection } from "./components/scenario-section";
 import { MCQQuestion } from "./components/mcq-question";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Writing() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
 
   const { writingData, fetchWritingData } = useWritingContext();
+  const id = parseInt(sectionId!);
+  const section = writingData?.pages[id - 1];
+  const [timer, setTimer] = useState<number | undefined>(
+    section?.duration || undefined
+  );
 
   useEffect(() => {
     fetchWritingData();
-  }, [])
+  }, []);
+  
+  useEffect(() => {
+    setTimer(section?.duration)
+  }, [section])
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prev) => {
+        if (prev && prev > 0) {
+          return prev - 1;
+        } else {
+          return undefined;
+        }
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (!writingData) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
-
-  const id = parseInt(sectionId!);
-  const section = writingData?.pages[id - 1];
 
   if (!section) {
     return (
       <Navigate
-        to={"/writing/end-page"}
+        to={"/speaking/1"}
         state={{
           prevPage: pathname,
         }}
@@ -41,7 +60,7 @@ export default function Writing() {
 
   return (
     <CardLayout
-      timer={section.duration ? section.duration : undefined}
+      timer={timer}
       title={section.title}
       prevLink={pathname}
       nextLink={next}
@@ -52,7 +71,9 @@ export default function Writing() {
           !section.questionSets &&
           section.instructions.length > 0 && (
             <>
-           {section.instructions[0].text &&   <InsructionHeader text={section.instructions[0]?.text || ""} />}
+              {section.instructions[0].text && (
+                <InsructionHeader text={section.instructions[0]?.text || ""} />
+              )}
               {section.instructions[0]?.video && (
                 <InstructionVideo videoSrc={section.instructions[0].video} />
               )}

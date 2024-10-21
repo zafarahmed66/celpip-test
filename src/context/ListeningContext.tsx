@@ -27,7 +27,6 @@ export const ListeningProvider = ({ children }: { children: ReactNode }) => {
   };
 
 
-
   const fetchListeningData = async () => {
     const module = currentTest?.modules.find(
       (module) => module.type === "Listening"
@@ -44,9 +43,15 @@ export const ListeningProvider = ({ children }: { children: ReactNode }) => {
           currentAttempt = _id;
         }
 
-          const data = await fetchAttempt(currentAttempt || "", "Listening", attemptTestData, setAttemptTestData);
-          setListeningData(data);
+        const data = await fetchAttempt(
+          currentAttempt || "",
+          "Listening",
+          attemptTestData,
+          setAttemptTestData
+        );
+        setListeningData(data);
       }
+      
     } catch {
       toast.error("Something went wrong!");
     }

@@ -25,11 +25,11 @@ export default function Dashboard() {
               : "Welcome to Your Hzad Education Online Study Materials!"}
           </h2>
           <p className="text-sm">
-            This practice test package contains two complete CELPIP-General
-            Tests. The package also includes answer keys for the Listening and
-            Reading Tests and Performance Standards showing the key factors that
-            CELPIP Raters consider when they assess Writing and Speaking
-            responses.
+            This practice test package contains two complete HZad
+            Education-General Tests. The package also includes answer keys for
+            the Listening and Reading Tests and Performance Standards showing
+            the key factors that HZad Education Raters consider when they assess
+            Writing and Speaking responses.
           </p>
           <p className="text-sm">
             Click{" "}
@@ -49,14 +49,28 @@ export default function Dashboard() {
           </div>
         ) : (
           <div className="flex gap-2">
-            <DropDownSelect label="Start Test" tests={tests!} />
-            <DropDownSelect label="Your Score" tests={tests!} />
+            <DropDownSelect
+              variant="default"
+              label="Start Test"
+              tests={tests!}
+            />
+            <DropDownSelect
+              variant="outline"
+              label="Your Score"
+              tests={tests!}
+            />
           </div>
         )}
         <div className="space-y-4 text-sm text-center text-customBlue">
           <p> Test Format</p>
-          <p> Performance Standards for the CELPIP-General Writing Test</p>
-          <p> Performance Standards for the CELPIP-General Speaking Test</p>
+          <p>
+            {" "}
+            Performance Standards for the HZad Education-General Writing Test
+          </p>
+          <p>
+            {" "}
+            Performance Standards for the HZad Education-General Speaking Test
+          </p>
           <p>Practice Test A - Listening Transcripts </p>
           <p> Practice Test B - Listening Transcripts Study</p>
           <p> Materials Bookstore Score Comparison Chart</p>
@@ -66,12 +80,20 @@ export default function Dashboard() {
   );
 }
 
-function DropDownSelect({ tests, label }: { label: string; tests: Test[] }) {
+function DropDownSelect({
+  tests,
+  label,
+  variant,
+}: {
+  label: string;
+  tests: Test[];
+  variant: "outline" | "default";
+}) {
   const { setCurrentTest } = useTestContext();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button>{label}</Button>
+        <Button variant={variant}>{label}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {tests?.map((test) => (

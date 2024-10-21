@@ -2,11 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "@/components/layout";
 import Test from "./pages/home/test";
 import VideoInstruction from "./components/video-instruction";
-import listeningTestMockData from "./data/listeningTest";
-import { readingTestMockData } from "./data/readingTest";
-import { speakingTestData } from "./data/speakingTest";
 import { completeTestData } from "./data/completeTest";
-import EndPage from "./components/end-page";
 import ReadingAnswerKey from "./pages/reading/components/reading-answer-key";
 import Writing from "./pages/writing/writing";
 import Listening from "./pages/listening/listening";
@@ -19,7 +15,6 @@ import Dashboard from "./pages/dashboard";
 import AuthForm from "./pages/auth/auth";
 import ProtectedRoute from "./pages/protected-route";
 import PublicRoute from "./pages/public-route";
-import { writingTestData } from "./data/writingTest";
 
 const router = createBrowserRouter([
   {
@@ -51,31 +46,12 @@ const router = createBrowserRouter([
         path: "/listening/result",
         element: <ListeningResult />,
       },
-      {
-        path: "/listening/end-page",
-        element: (
-          <EndPage
-            title={listeningTestMockData.endPage.title}
-            instructions={listeningTestMockData.endPage.instruction}
-            nextLink="/reading/1"
-          />
-        ),
-      },
+     
 
       // reading
       {
         path: "/reading/:sectionId",
         element: <Reading />,
-      },
-      {
-        path: "/reading/end-page",
-        element: (
-          <EndPage
-            title={readingTestMockData.endPage.title}
-            instructions={readingTestMockData.endPage.instruction}
-            nextLink="/writing/1"
-          />
-        ),
       },
       {
         path: "/reading/answer-key",
@@ -92,32 +68,14 @@ const router = createBrowserRouter([
         element: <Writing />,
       },
 
-      {
-        path: "/writing/end-page",
-        element: (
-          <EndPage
-            title={writingTestData.endPage.title}
-            instructions={writingTestData.endPage.instruction}
-            nextLink="/speaking/1"
-          />
-        ),
-      },
+     
 
       // Speaking
       {
         path: "/speaking/:sectionId",
         element: <Speaking />,
       },
-      {
-        path: "/speaking/end-page",
-        element: (
-          <EndPage
-            title={speakingTestData.endPage.title}
-            instructions={speakingTestData.endPage.instruction}
-            nextLink="/"
-          />
-        ),
-      },
+     
 
       // complete
       {

@@ -38,7 +38,7 @@ export default function Listening() {
       ) {
         setEnableNext(false);
       } else {
-        setEnableNext(true); 
+        setEnableNext(true);
       }
     }
   }, [section]);
@@ -76,12 +76,14 @@ export default function Listening() {
       title={section.title}
       prevLink={pathname}
       nextLink={next}
-      hasAnswerKey={!!section.questionSets} 
+      hasAnswerKey={!!section.questionSets}
     >
       <div className="min-h-[75vh] overflow-y-scroll">
-        {!section.questionSets && section.instructions && section.instructions[0]?.text && (
-          <InstructionHeader text={section.instructions[0].text!} />
-        )}
+        {!section.questionSets &&
+          section.instructions &&
+          section.instructions[0]?.text && (
+            <InstructionHeader text={section.instructions[0].text!} />
+          )}
         {section.instructions && section.instructions[0]?.video && (
           <InstructionVideo
             description={section.description || undefined}

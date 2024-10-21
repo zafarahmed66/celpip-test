@@ -40,18 +40,19 @@ export default function Test() {
               <span className="block sm:inline">
                 {" "}
                 In response to ongoing research and development, changes may
-                occasionally be made to the CELPIP Test. There may be short
-                periods of time when study materials do not exactly match the
-                current official test format, and content may be updated to
-                match changes to the CELPIP Test without prior notice. Check the
-                CELPIP website for any updates to the CELPIP Test:{" "}
+                occasionally be made to the HZad Education Test. There may be
+                short periods of time when study materials do not exactly match
+                the current official test format, and content may be updated to
+                match changes to the HZad Education Test without prior notice.
+                Check the HZad Education website for any updates to the HZad
+                Education Test:{" "}
                 <a
-                  href="https://www.celpip.ca"
+                  href="https://www.HZad Education.ca"
                   target="_blank"
                   className="text-customBlue"
                 >
                   {" "}
-                  https://www.celpip.ca{" "}
+                  https://www.HZad Education.ca{" "}
                 </a>
                 .
               </span>

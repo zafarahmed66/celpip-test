@@ -8,11 +8,13 @@ import { useEffect, useState } from "react";
 import { Navigate, useLocation, useParams } from "react-router-dom";
 import { ReadingPassage } from "./components/reading-passage";
 import { QuestionSet } from "./components/question-set";
+import { useTestContext } from "@/context/TestContext";
 
 export default function Reading() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
   const { readingData, fetchReadingData } = useReadingContext();
+  const { currentTest } = useTestContext();
   const id = parseInt(sectionId!);
   const section = readingData?.pages[id - 1];
   
@@ -21,8 +23,10 @@ export default function Reading() {
   );
 
   useEffect(() => {
-    fetchReadingData();
-  }, [])
+    if (currentTest) { 
+      fetchReadingData();
+    }
+  }, [currentTest])
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((prev) => {

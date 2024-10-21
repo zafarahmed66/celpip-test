@@ -71,12 +71,13 @@ const EndPage = ({ title, nextLink, instructions }: EndPageProps) => {
 
           <div className="flex flex-col col-span-2 text-gray-600">
             <h2 className="text-xl font-medium">
-              Keep practicing with the CELPIP Practice Tests!
+              Keep practicing with the HZad Education Practice Tests!
             </h2>
 
             <div className="flex-grow">
               <p className="my-4 text-sm">
-                Each of the CELPIP-General Practice Tests (Online) includes:
+                Each of the HZad Education-General Practice Tests (Online)
+                includes:
               </p>
               <div>
                 {data.map((item, index) => (
@@ -95,7 +96,7 @@ const EndPage = ({ title, nextLink, instructions }: EndPageProps) => {
                 {" "}
                 Save up to $30.00{" "}
               </span>{" "}
-              on CELPIP Practice Test bundles.
+              on HZad Education Practice Test bundles.
             </div>
           </div>
         </div>

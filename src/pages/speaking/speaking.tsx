@@ -8,16 +8,19 @@ import SpeakingTest from "./components/speaking-test";
 import DescribingImage from "./components/describing-image";
 import ComparingImage from "./components/comparing-image";
 import { useEffect } from "react";
+import { toast } from "sonner";
+import { useTestContext } from "@/context/TestContext";
 
 export default function Speaking() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
 
   const { speakingData, fetchSpeakingData } = useSpeakingContext();
+  const { currentTest } = useTestContext();
 
   useEffect(() => {
     fetchSpeakingData();
-  }, [])
+  }, [currentTest])
 
   if (!speakingData) return <div>Loading...</div>;
 
@@ -25,9 +28,10 @@ export default function Speaking() {
   const section = speakingData.pages[id - 1];
 
   if (!section) {
+    toast.success("All test are completed!");
     return (
       <Navigate
-        to={"/speaking/end-page"}
+        to={"/"}
         state={{
           prevPage: pathname,
         }}

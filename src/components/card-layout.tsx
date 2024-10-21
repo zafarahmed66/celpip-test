@@ -62,7 +62,7 @@ export default function CardLayout({
             "flex flex-row justify-between items-center bg-gray-200 py-2 border-gray-300 border-b"
           )}
         >
-          <h2 className="text-gray-600">{title}</h2>
+          <h2 className={cn("text-gray-600", title.length > 50 && "text-sm", title.length > 70 && "text-xs")}>{title}</h2>
           <div className="relative gap-4 text-sm">
             {recordingTime !== undefined && (
               <p className="absolute right-80 top-2 w-[180px]">
