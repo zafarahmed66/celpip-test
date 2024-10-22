@@ -9,15 +9,39 @@ import {
 } from "@/components/ui/table";
 import { flattenReadingTest, getNextModule } from "@/lib/utils";
 import CardLayout from "@/components/card-layout";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useSearchParams } from "react-router-dom";
 import { useReadingContext } from "@/context/ReadingContext";
 import { useTestContext } from "@/context/TestContext";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 const ReadingResult = () => {
-  const { userAnswers, readingData } = useReadingContext();
-  const { currentTest } = useTestContext();
+  const { userAnswers, readingData, fetchReadingData } = useReadingContext();
   const location = useLocation();
+  const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } =
+    useTestContext();
+  const [searchParams] = useSearchParams();
+  const attemptIdParams = searchParams.get("attemptId");
+  const testId = searchParams.get("testId");
+
+  useEffect(() => {
+    if (!attemptId && attemptIdParams) {
+      setAttemptId(attemptIdParams);
+    }
+
+    if (testId && tests) {
+      const currentTest = tests.find((test) => test._id === testId) || tests[0];
+      if (currentTest) {
+        setCurrentTest(currentTest);
+      }
+    }
+  }, [attemptIdParams, testId, tests, attemptId]);
+
+  useEffect(() => {
+    if (attemptId && currentTest) {
+      fetchReadingData();
+    }
+  }, [attemptId, currentTest]);
 
   if (!readingData) return <div>Loading...</div>;
   const questions = flattenReadingTest(readingData);
@@ -38,18 +62,16 @@ const ReadingResult = () => {
   };
 
   const nextModule = getNextModule("reading", currentTest!);
-  console.log(nextModule)
-   if (nextModule === "/") {
-     toast.success("All test are completed!");
-     return <Navigate to="/" />;
-   }
-
-
+  console.log(nextModule);
+  if (nextModule === "/") {
+    toast.success("All test are completed!");
+    return <Navigate to="/" />;
+  }
 
   return (
     <CardLayout
       title={`Practice Test A - Your Reading HZad Education Score`}
-      nextLink={`/${nextModule}/1`}
+      nextLink={`/${nextModule}/1?testId=${testId}&attemptId=${attemptId}`}
       prevLink={location.pathname}
     >
       <div className="px-8 py-2 space-y-16">

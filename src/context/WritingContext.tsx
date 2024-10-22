@@ -35,6 +35,8 @@ export const WritingProvider = ({ children }: { children: ReactNode }) => {
          }
          const data = await fetchAttempt(currentAttempt || "", "Writing", attemptTestData, setAttemptTestData);
          setWritingData(data);
+       } else {
+         toast.error("No current test found.")
        }
      } catch {
        toast.error("Something went wrong!");

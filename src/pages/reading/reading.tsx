@@ -5,7 +5,12 @@ import InstructionItem from "@/components/instruction-item";
 import InstructionVideo from "@/components/instruction-video";
 import { useReadingContext } from "@/context/ReadingContext";
 import { useEffect, useState } from "react";
-import { Navigate, useLocation, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { ReadingPassage } from "./components/reading-passage";
 import { QuestionSet } from "./components/question-set";
 import { useTestContext } from "@/context/TestContext";
@@ -14,19 +19,40 @@ export default function Reading() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
   const { readingData, fetchReadingData } = useReadingContext();
-  const { currentTest } = useTestContext();
+  const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } =
+    useTestContext();
+
   const id = parseInt(sectionId!);
   const section = readingData?.pages[id - 1];
-  
+
   const [timer, setTimer] = useState<number | undefined>(
     section?.duration || undefined
   );
 
+  const [searchParams] = useSearchParams();
+  const attemptIdParams = searchParams.get("attemptId");
+  const testId = searchParams.get("testId");
+
   useEffect(() => {
-    if (currentTest) { 
+    if (!attemptId && attemptIdParams) {
+      setAttemptId(attemptIdParams);
+    }
+
+    if (testId && tests) {
+      const currentTest = tests.find((test) => test._id === testId) || tests[0];
+      if (currentTest) {
+        setCurrentTest(currentTest);
+      }
+    }
+  }, [attemptIdParams, testId, tests, attemptId]);
+
+  useEffect(() => {
+    if (attemptId && currentTest) {
       fetchReadingData();
     }
-  }, [currentTest])
+  }, [attemptId, currentTest]);
+
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((prev) => {
@@ -43,15 +69,15 @@ export default function Reading() {
   }, []);
 
   if (!readingData) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
-  const next = `/reading/${id + 1}`;
+  const next = `/reading/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;
 
   if (!section) {
     return (
       <Navigate
-        to={"/reading/answer-key"}
+        to={`/reading/answer-key?testId=${currentTest?._id}&attemptId=${attemptId}`}
         state={{
           prevPage: pathname,
         }}

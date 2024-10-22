@@ -11,18 +11,45 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { CheckIcon, X } from "lucide-react";
 import { flattenReadingTest, getActualQuestionIndexReading } from "@/lib/utils";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useReadingContext } from "@/context/ReadingContext";
+import { useTestContext } from "@/context/TestContext";
+import { useEffect } from "react";
 
 export default function ReadingAnswerKeyPage() {
-  const { readingData, userAnswers } = useReadingContext();
+  const { readingData, userAnswers, fetchReadingData } = useReadingContext();
+  const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } =
+    useTestContext();
+  const [searchParams] = useSearchParams();
+  const attemptIdParams = searchParams.get("attemptId");
+  const testId = searchParams.get("testId");
+
+  useEffect(() => {
+    if (!attemptId && attemptIdParams) {
+      setAttemptId(attemptIdParams);
+    }
+
+    if (testId && tests) {
+      const currentTest = tests.find((test) => test._id === testId) || tests[0];
+      if (currentTest) {
+        setCurrentTest(currentTest);
+      }
+    }
+  }, [attemptIdParams, testId, tests, attemptId]);
+
+  useEffect(() => {
+    if (attemptId && currentTest) {
+      fetchReadingData();
+    }
+  }, [attemptId, currentTest]);
+
   if (!readingData) return <div>Loading...</div>;
   const data = flattenReadingTest(readingData);
   let currentIndex = 1;
   return (
     <CardLayout
       title={"Practice Test A - Reading Answer Key"}
-      nextLink={"/reading/result"}
+      nextLink={`/reading/result?testId=${testId}&attemptId=${attemptId}`}
     >
       <div className="p-4">
         <Alert className="flex gap-2 mb-4 border rounded-sm bg-customGray border-customBlue">

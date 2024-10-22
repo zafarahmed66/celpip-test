@@ -3,7 +3,7 @@ import InsructionHeader from "@/components/instruction-header";
 import InstructionItem from "@/components/instruction-item";
 import InstructionVideo from "@/components/instruction-video";
 import { useWritingContext } from "@/context/WritingContext";
-import { Navigate, useLocation, useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams, useSearchParams } from "react-router-dom";
 import SimpleQuesion from "./components/simple-question";
 import { ScenarioSection } from "./components/scenario-section";
 import { MCQQuestion } from "./components/mcq-question";
@@ -17,16 +17,35 @@ export default function Writing() {
   const { pathname } = useLocation();
 
   const { writingData, fetchWritingData } = useWritingContext();
-  const { currentTest } = useTestContext();
+  const { currentTest, attemptId, setAttemptId, tests, setCurrentTest } = useTestContext();
   const id = parseInt(sectionId!);
   const section = writingData?.pages[id - 1];
   const [timer, setTimer] = useState<number | undefined>(
     section?.duration || undefined
   );
+  
+  const [searchParams] = useSearchParams();
+  const attemptIdParams = searchParams.get("attemptId");
+  const testId = searchParams.get("testId");
 
   useEffect(() => {
-    fetchWritingData();
-  }, []);
+    if (!attemptId && attemptIdParams) {
+      setAttemptId(attemptIdParams); 
+    }
+
+    if (testId && tests) {
+      const currentTest = tests.find((test) => test._id === testId) || tests[0];
+      if (currentTest) {
+        setCurrentTest(currentTest); 
+      }
+    }
+  }, [attemptIdParams, testId, tests, attemptId]);
+
+  useEffect(() => {
+    if (attemptId && currentTest) {
+      fetchWritingData();
+    }
+  }, [attemptId, currentTest]);
   
   useEffect(() => {
     setTimer(section?.duration)
@@ -57,7 +76,7 @@ export default function Writing() {
     }
     return (
       <Navigate
-        to={`/${nextModule}/1`}
+        to={`/${nextModule}/1?testId=${currentTest?._id}&attemptId=${attemptId}`}
         state={{
           prevPage: pathname,
         }}
@@ -65,7 +84,7 @@ export default function Writing() {
     );
   }
 
-  const next = `/writing/${id + 1}`;
+  const next = `/writing/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;
 
   return (
     <CardLayout

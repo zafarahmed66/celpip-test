@@ -15,10 +15,36 @@ import {
   getActualQuestionIndexListening,
 } from "@/lib/utils";
 import { useListeningContext } from "@/context/ListeningContext";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { useTestContext } from "@/context/TestContext";
+import { useEffect } from "react";
 
 export default function ListeningAnswerKeyPage() {
-  const { listeningData, userAnswers } = useListeningContext();
+  const { listeningData, userAnswers, fetchListeningData } = useListeningContext();
+  const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } =
+    useTestContext();
+  const [searchParams] = useSearchParams();
+  const attemptIdParams = searchParams.get("attemptId");
+  const testId = searchParams.get("testId");
+
+  useEffect(() => {
+    if (!attemptId && attemptIdParams) {
+      setAttemptId(attemptIdParams);
+    }
+
+    if (testId && tests) {
+      const currentTest = tests.find((test) => test._id === testId) || tests[0];
+      if (currentTest) {
+        setCurrentTest(currentTest);
+      }
+    }
+  }, [attemptIdParams, testId, tests, attemptId]);
+
+  useEffect(() => {
+    if (attemptId && currentTest) {
+      fetchListeningData();
+    }
+  }, [attemptId, currentTest]);
   if (!listeningData) {
     return <div>Loading...</div>;
   }

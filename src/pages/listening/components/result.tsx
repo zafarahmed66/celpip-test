@@ -10,14 +10,38 @@ import {
 import { flattenListeningTest, getNextModule } from "@/lib/utils";
 import { useListeningContext } from "@/context/ListeningContext";
 import CardLayout from "@/components/card-layout";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useSearchParams } from "react-router-dom";
 import { useTestContext } from "@/context/TestContext";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 const ListeningResult = () => {
-  const { userAnswers, listeningData } = useListeningContext();
-  const { currentTest } = useTestContext();
+  const { userAnswers, listeningData, fetchListeningData } = useListeningContext();
   const location = useLocation();
+  const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } =
+    useTestContext();
+  const [searchParams] = useSearchParams();
+  const attemptIdParams = searchParams.get("attemptId");
+  const testId = searchParams.get("testId");
+
+  useEffect(() => {
+    if (!attemptId && attemptIdParams) {
+      setAttemptId(attemptIdParams);
+    }
+
+    if (testId && tests) {
+      const currentTest = tests.find((test) => test._id === testId) || tests[0];
+      if (currentTest) {
+        setCurrentTest(currentTest);
+      }
+    }
+  }, [attemptIdParams, testId, tests, attemptId]);
+
+  useEffect(() => {
+    if (attemptId && currentTest) {
+      fetchListeningData();
+    }
+  }, [attemptId, currentTest]);
 
   if (!listeningData) return <div>Loading...</div>;
   const questions = flattenListeningTest(listeningData);

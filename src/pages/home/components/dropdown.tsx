@@ -4,7 +4,8 @@ import { useTestContext } from "@/context/TestContext"
 import { Link } from "react-router-dom"
 
 const DropDown = () => {
-  const { currentTest } = useTestContext();
+  const { currentTest, attemptId } = useTestContext();
+  // if (!attemptId) return;
   
   return (
     <DropdownMenu>
@@ -18,7 +19,10 @@ const DropDown = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="text-white rounded-none bg-customBlue">
         <DropdownMenuItem className="w-56 focus:bg-customDarkBlue focus:text-white">
-          <Link to={`/complete-test`} className="text-center">
+          <Link
+            to={`/complete-test?testId=${currentTest?._id}`}
+            className="text-center"
+          >
             {"COMPLETE TEST"}
           </Link>
         </DropdownMenuItem>
@@ -31,7 +35,7 @@ const DropDown = () => {
               className="w-56 focus:bg-customDarkBlue focus:text-white"
             >
               <Link
-                to={`/${route.type.toLowerCase()}/1`}
+                to={`/${route.type.toLowerCase()}/1?testId=${currentTest._id}&attemptId=${attemptId}`}
                 className="text-center"
               >
                 {" "}

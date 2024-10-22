@@ -4,16 +4,18 @@ import InstructionItem from "@/components/instruction-item";
 import InstructionVideo from "@/components/instruction-video";
 import { useListeningContext } from "@/context/ListeningContext";
 import { useEffect, useState } from "react";
-import { Navigate, useLocation, useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams, useSearchParams } from "react-router-dom";
 import AudioSection from "./components/audio-section";
 import QuestionSection from "./components/question-section";
 import Preparation from "./components/preparation";
 import QuestionnaireComponent from "./components/questionnaire";
+import { useTestContext } from "@/context/TestContext";
 
 export default function Listening() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
   const { listeningData, fetchListeningData } = useListeningContext();
+  const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } = useTestContext();
 
   const id = parseInt(sectionId!);
   const section = listeningData?.pages[id - 1];
@@ -24,9 +26,28 @@ export default function Listening() {
 
   const [enableNext, setEnableNext] = useState(true);
 
-  useEffect(() => {
-    fetchListeningData();
-  }, []);
+ const [searchParams] = useSearchParams();
+ const attemptIdParams = searchParams.get("attemptId");
+ const testId = searchParams.get("testId");
+
+ useEffect(() => {
+   if (!attemptId && attemptIdParams) {
+     setAttemptId(attemptIdParams);
+   }
+
+   if (testId && tests) {
+     const currentTest = tests.find((test) => test._id === testId) || tests[0];
+     if (currentTest) {
+       setCurrentTest(currentTest);
+     }
+   }
+ }, [attemptIdParams, testId, tests, attemptId]);
+
+ useEffect(() => {
+   if (attemptId && currentTest) {
+     fetchListeningData();
+   }
+ }, [attemptId, currentTest]);
 
   useEffect(() => {
     if (section) {
@@ -63,11 +84,14 @@ export default function Listening() {
 
   if (!section) {
     return (
-      <Navigate to={"/listening/answer-key"} state={{ prevPage: pathname }} />
+      <Navigate
+        to={`/listening/answer-key?testId=${currentTest?._id}&attemptId=${attemptId}`}
+        state={{ prevPage: pathname }}
+      />
     );
   }
 
-  const next = `/listening/${id + 1}`;
+  const next = `/listening/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;
 
   return (
     <CardLayout
