@@ -10,6 +10,7 @@ import ComparingImage from "./components/comparing-image";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useTestContext } from "@/context/TestContext";
+import { getNextModule } from "@/lib/utils";
 
 export default function Speaking() {
   const { sectionId } = useParams();
@@ -27,11 +28,16 @@ export default function Speaking() {
   const id = parseInt(sectionId!);
   const section = speakingData.pages[id - 1];
 
+  
   if (!section) {
-    toast.success("All test are completed!");
+    const nextModule = getNextModule("speaking", currentTest!);
+    if (nextModule === "/") {
+      toast.success("All test are completed!");
+      return <Navigate to="/" />;
+    }
     return (
       <Navigate
-        to={"/"}
+        to={`/${nextModule}/1`}
         state={{
           prevPage: pathname,
         }}
@@ -40,6 +46,7 @@ export default function Speaking() {
   }
 
   const next = `/speaking/${id + 1}`;
+  
 
   return (
     <CardLayout

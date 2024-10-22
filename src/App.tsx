@@ -82,7 +82,6 @@ const router = createBrowserRouter([
         path: "/complete-test",
         element: (
           <VideoInstruction
-            nextLink="/listening/1"
             title="Overview Instructional Video"
             prevLink="/"
             videoSrc={completeTestData.videoUrl}

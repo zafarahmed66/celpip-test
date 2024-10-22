@@ -7,13 +7,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { flattenReadingTest } from "@/lib/utils";
+import { flattenReadingTest, getNextModule } from "@/lib/utils";
 import CardLayout from "@/components/card-layout";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useReadingContext } from "@/context/ReadingContext";
+import { useTestContext } from "@/context/TestContext";
+import { toast } from "sonner";
 
 const ReadingResult = () => {
   const { userAnswers, readingData } = useReadingContext();
+  const { currentTest } = useTestContext();
   const location = useLocation();
 
   if (!readingData) return <div>Loading...</div>;
@@ -34,11 +37,19 @@ const ReadingResult = () => {
     return score;
   };
 
+  const nextModule = getNextModule("reading", currentTest!);
+  console.log(nextModule)
+   if (nextModule === "/") {
+     toast.success("All test are completed!");
+     return <Navigate to="/" />;
+   }
+
+
 
   return (
     <CardLayout
       title={`Practice Test A - Your Reading HZad Education Score`}
-      nextLink={"/writing/1"}
+      nextLink={`/${nextModule}/1`}
       prevLink={location.pathname}
     >
       <div className="px-8 py-2 space-y-16">

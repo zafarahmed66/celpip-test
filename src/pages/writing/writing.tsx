@@ -8,12 +8,16 @@ import SimpleQuesion from "./components/simple-question";
 import { ScenarioSection } from "./components/scenario-section";
 import { MCQQuestion } from "./components/mcq-question";
 import { useEffect, useState } from "react";
+import { getNextModule } from "@/lib/utils";
+import { useTestContext } from "@/context/TestContext";
+import { toast } from "sonner";
 
 export default function Writing() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
 
   const { writingData, fetchWritingData } = useWritingContext();
+  const { currentTest } = useTestContext();
   const id = parseInt(sectionId!);
   const section = writingData?.pages[id - 1];
   const [timer, setTimer] = useState<number | undefined>(
@@ -46,9 +50,14 @@ export default function Writing() {
   }
 
   if (!section) {
+    const nextModule = getNextModule("writing", currentTest!);
+    if (nextModule === "/") {
+      toast.success("All test are completed!")
+      return <Navigate to="/" />
+    }
     return (
       <Navigate
-        to={"/speaking/1"}
+        to={`/${nextModule}/1`}
         state={{
           prevPage: pathname,
         }}

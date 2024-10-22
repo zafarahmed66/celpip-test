@@ -1,5 +1,6 @@
 import { ListeningTest, Question } from "@/types/listening";
 import { ReadingTest, Question as ReadingQuestion } from "@/types/reading";
+import { Test } from "@/types/test";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -139,22 +140,12 @@ export function getActualQuestionIndexReading(
 }
 
 
+export function getNextModule(type: string, currentTest: Test) : string {
+  let nextModule = "/";
+  const currentModule = currentTest.modules.findIndex(module => module.type.toLowerCase() === type);
+  if (currentModule >= 0 && currentModule <= currentTest.modules.length - 2) {
+    nextModule = currentTest.modules[currentModule + 1].type.toLowerCase();
+  }
 
-
-
-// export function getNextSpeakingExerciseId(
-//   currentExerciseId: string
-// ): string | null {
-//   const currentExerciseIndex = speakingTestData.exercise.findIndex(
-//     (exercise) => exercise.id === currentExerciseId
-//   );
-
-//   if (
-//     currentExerciseIndex !== -1 &&
-//     currentExerciseIndex < speakingTestData.exercise.length - 1
-//   ) {
-//     return speakingTestData.exercise[currentExerciseIndex + 1].id;
-//   }
-
-//   return null;
-// }
+  return nextModule;
+}
