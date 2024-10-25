@@ -12,7 +12,6 @@ import { useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-
 const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
   const { tests, setCurrentTest, fetchTests } = useTestContext();
@@ -63,31 +62,21 @@ const Navbar = () => {
             />
           </Link>
         </div>
-        <div className="flex items-center flex-1 gap-2 ">
-          <p className="hidden md:block text-sm text-[#262161] font-semibold">
-            Selected Product:{" "}
-          </p>
-          <Select onValueChange={handleChange}>
-            <SelectTrigger className="w-fit">
-              <SelectValue placeholder="Click to Select Product" />
-            </SelectTrigger>
-            <SelectContent className="">{testItems}</SelectContent>
-          </Select>
-        </div>
+        {isAuthenticated && (
+          <div className="flex items-center flex-1 gap-2 ">
+            <p className="hidden md:block text-sm text-[#262161] font-semibold">
+              Selected Product:{" "}
+            </p>
+            <Select onValueChange={handleChange}>
+              <SelectTrigger className="w-fit">
+                <SelectValue placeholder="Click to Select Product" />
+              </SelectTrigger>
+              <SelectContent className="">{testItems}</SelectContent>
+            </Select>
+          </div>
+        )}
         <div className="flex justify-end flex-1">
-          {!isAuthenticated ? (
-            <Button
-              variant="ghost"
-              className="text-white bg-customBlue hover:bg-customBlue/90 hover:text-white"
-              aria-label="Sign in"
-            >
-              <Link to={"/auth"}>
-                <span className="transition duration-200">SIGN IN</span>
-              </Link>
-            </Button>
-          ) : (
-            <Button onClick={handleLogout}>Logout</Button>
-          )}
+          {isAuthenticated && <Button onClick={handleLogout}>Logout</Button>}
         </div>
       </div>
     </header>
