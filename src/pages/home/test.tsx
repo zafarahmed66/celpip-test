@@ -14,6 +14,7 @@ export default function Test() {
   if (!currentTest) {
     return <Navigate to={"/"} />;
   }
+
   return (
     <section className="container px-4 py-8 mx-auto sm:px-6 lg:px-8">
       <Card className="max-w-4xl mx-auto overflow-hidden bg-white border border-gray-300 rounded-none shadow">
@@ -40,19 +41,15 @@ export default function Test() {
               <span className="block sm:inline">
                 {" "}
                 In response to ongoing research and development, changes may
-                occasionally be made to the HZad Education Test. There may be
-                short periods of time when study materials do not exactly match
-                the current official test format, and content may be updated to
-                match changes to the HZad Education Test without prior notice.
-                Check the HZad Education website for any updates to the HZad
-                Education Test:{" "}
+                occasionally be made to the HZad Education Test. Check the HZad
+                Education website for any updates to the HZad Education Test:{" "}
                 <a
-                  href="https://www.HZad Education.ca"
+                  href="https://www.hzadeducation.com"
                   target="_blank"
                   className="text-customBlue"
                 >
                   {" "}
-                  https://www.HZad Education.ca{" "}
+                  https://www.hzadeducation.com
                 </a>
                 .
               </span>

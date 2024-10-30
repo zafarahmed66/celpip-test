@@ -28,7 +28,7 @@ export default function Dashboard() {
             This practice test package contains two complete HZad
             Education-General Tests. The package also includes answer keys for
             the Listening and Reading Tests and Performance Standards showing
-            the key factors that HZad Education Raters consider when they assess
+            the key factors that HZad Education raters consider when they assess
             Writing and Speaking responses.
           </p>
           <p className="text-sm">
