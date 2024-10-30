@@ -15,7 +15,7 @@ export default function Listening() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
   const { listeningData, fetchListeningData } = useListeningContext();
-  const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } = useTestContext();
+  const { tests, attemptId, currentTest, setCurrentTest } = useTestContext();
 
   const id = parseInt(sectionId!);
   const section = listeningData?.pages[id - 1];
@@ -27,27 +27,22 @@ export default function Listening() {
   const [enableNext, setEnableNext] = useState(true);
 
  const [searchParams] = useSearchParams();
- const attemptIdParams = searchParams.get("attemptId");
  const testId = searchParams.get("testId");
 
  useEffect(() => {
-   if (!attemptId && attemptIdParams) {
-     setAttemptId(attemptIdParams);
-   }
-
    if (testId && tests) {
      const currentTest = tests.find((test) => test._id === testId) || tests[0];
      if (currentTest) {
        setCurrentTest(currentTest);
      }
    }
- }, [attemptIdParams, testId, tests, attemptId]);
+ }, [testId, tests]);
 
  useEffect(() => {
-   if (attemptId && currentTest) {
+   if (currentTest) {
      fetchListeningData();
    }
- }, [attemptId, currentTest]);
+ }, [currentTest]);
 
   useEffect(() => {
     if (section) {

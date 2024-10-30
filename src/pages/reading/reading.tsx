@@ -19,7 +19,7 @@ export default function Reading() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
   const { readingData, fetchReadingData } = useReadingContext();
-  const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } =
+  const { tests, attemptId, currentTest, setCurrentTest } =
     useTestContext();
 
   const id = parseInt(sectionId!);
@@ -30,27 +30,24 @@ export default function Reading() {
   );
 
   const [searchParams] = useSearchParams();
-  const attemptIdParams = searchParams.get("attemptId");
   const testId = searchParams.get("testId");
 
   useEffect(() => {
-    if (!attemptId && attemptIdParams) {
-      setAttemptId(attemptIdParams);
-    }
-
     if (testId && tests) {
       const currentTest = tests.find((test) => test._id === testId) || tests[0];
       if (currentTest) {
         setCurrentTest(currentTest);
       }
     }
-  }, [attemptIdParams, testId, tests, attemptId]);
+  }, [testId, tests]);
 
+  
   useEffect(() => {
-    if (attemptId && currentTest) {
+    if (currentTest) {
       fetchReadingData();
     }
-  }, [attemptId, currentTest]);
+  }, [currentTest]);
+
 
   
   useEffect(() => {

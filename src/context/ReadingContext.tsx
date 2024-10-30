@@ -40,7 +40,7 @@ export const ReadingProvider = ({ children }: { children: ReactNode }) => {
     try {
       if (currentTest && module) {
         let currentAttempt = attemptId;
-        if (!currentAttempt) {
+        if (currentAttempt === null) {
           const { _id } = await attemptTest(currentTest?._id, moduleIds);
           setAttemptId(_id);
           currentAttempt = _id;
@@ -48,8 +48,12 @@ export const ReadingProvider = ({ children }: { children: ReactNode }) => {
         const data = await fetchAttempt(currentAttempt || "", "Reading", attemptTestData, setAttemptTestData);
         setReadingData(data);
       }
-    } catch {
-      toast.error("Something went wrong!");
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Something went wrong!");
+      }
     }
   };
 

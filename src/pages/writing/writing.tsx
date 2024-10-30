@@ -17,7 +17,7 @@ export default function Writing() {
   const { pathname } = useLocation();
 
   const { writingData, fetchWritingData } = useWritingContext();
-  const { currentTest, attemptId, setAttemptId, tests, setCurrentTest } = useTestContext();
+  const { currentTest, attemptId, tests, setCurrentTest } = useTestContext();
   const id = parseInt(sectionId!);
   const section = writingData?.pages[id - 1];
   const [timer, setTimer] = useState<number | undefined>(
@@ -25,27 +25,22 @@ export default function Writing() {
   );
   
   const [searchParams] = useSearchParams();
-  const attemptIdParams = searchParams.get("attemptId");
   const testId = searchParams.get("testId");
 
   useEffect(() => {
-    if (!attemptId && attemptIdParams) {
-      setAttemptId(attemptIdParams); 
-    }
-
     if (testId && tests) {
       const currentTest = tests.find((test) => test._id === testId) || tests[0];
       if (currentTest) {
         setCurrentTest(currentTest); 
       }
     }
-  }, [attemptIdParams, testId, tests, attemptId]);
+  }, [testId, tests]);
 
   useEffect(() => {
-    if (attemptId && currentTest) {
+    if (currentTest) {
       fetchWritingData();
     }
-  }, [attemptId, currentTest]);
+  }, [currentTest]);
   
   useEffect(() => {
     setTimer(section?.duration)

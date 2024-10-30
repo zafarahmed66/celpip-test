@@ -17,32 +17,27 @@ export default function Speaking() {
   const { pathname } = useLocation();
 
   const { speakingData, fetchSpeakingData } = useSpeakingContext();
-  const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } =
+  const { tests, attemptId, currentTest, setCurrentTest } =
     useTestContext();
   
 
   const [searchParams] = useSearchParams();
-  const attemptIdParams = searchParams.get("attemptId");
   const testId = searchParams.get("testId");
 
   useEffect(() => {
-    if (!attemptId && attemptIdParams) {
-      setAttemptId(attemptIdParams);
-    }
-
     if (testId && tests) {
       const currentTest = tests.find((test) => test._id === testId) || tests[0];
       if (currentTest) {
         setCurrentTest(currentTest);
       }
     }
-  }, [attemptIdParams, testId, tests, attemptId]);
+  }, [testId, tests]);
 
   useEffect(() => {
-    if (attemptId && currentTest) {
+    if (currentTest) {
       fetchSpeakingData();
     }
-  }, [attemptId, currentTest]);
+  }, [currentTest]);
 
   if (!speakingData) return <div>Loading...</div>;
 
