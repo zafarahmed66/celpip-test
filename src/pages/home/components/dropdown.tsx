@@ -21,7 +21,7 @@ const DropDown = () => {
         <DropdownMenuItem className="w-56 focus:bg-customDarkBlue focus:text-white">
           <Link
             to={`/complete-test?testId=${currentTest?._id}`}
-            className="text-center"
+            className="w-full text-center"
           >
             {"COMPLETE TEST"}
           </Link>
@@ -36,7 +36,7 @@ const DropDown = () => {
             >
               <Link
                 to={`/${route.type.toLowerCase()}/1?testId=${currentTest._id}&attemptId=${attemptId}`}
-                className="text-center"
+                className="w-full text-center"
               >
                 {" "}
                 {route.type.toUpperCase()}{" "}
