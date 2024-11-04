@@ -20,6 +20,7 @@ interface CardLayout {
   enableNext?: boolean;
   recordingTime?: number;
   hasAnswerKey?: boolean;
+  isSpeakingTest?: boolean;
 }
 
 export default function CardLayout({
@@ -32,6 +33,7 @@ export default function CardLayout({
   timer,
   recordingTime,
   hasAnswerKey = false,
+  isSpeakingTest = false,
 }: CardLayout) {
   const displayTimer = (time: number) => {
     if (time) {
@@ -44,6 +46,7 @@ export default function CardLayout({
       return "None";
     }
   };
+
   const location = useLocation();
   const isLastPage = location.pathname.includes("speaking/end-page");
 
@@ -62,7 +65,15 @@ export default function CardLayout({
             "flex flex-row justify-between items-center bg-gray-200 py-2 border-gray-300 border-b"
           )}
         >
-          <h2 className={cn("text-gray-600", title.length > 50 && "text-sm", title.length > 70 && "text-xs")}>{title}</h2>
+          <h2
+            className={cn(
+              "text-gray-600",
+              title.length > 50 && "text-sm",
+              title.length > 70 && "text-xs"
+            )}
+          >
+            {title}
+          </h2>
           <div className="relative gap-4 text-sm">
             {recordingTime !== undefined && (
               <p className="absolute right-80 top-2 w-[180px]">
@@ -73,7 +84,9 @@ export default function CardLayout({
                     recordingTime >= 60 && "text-gray-700 font-medium"
                   )}
                 >
-                  {displayTimer(recordingTime)}
+                  {isSpeakingTest
+                    ? `${recordingTime} seconds`
+                    : displayTimer(recordingTime)}
                 </span>
               </p>
             )}
@@ -91,7 +104,9 @@ export default function CardLayout({
                     timer >= 60 && "text-gray-700 font-medium"
                   )}
                 >
-                  {displayTimer(timer)}
+                  {isSpeakingTest
+                    ? `${timer} seconds`
+                    : displayTimer(timer)}
                 </span>
               </p>
             )}

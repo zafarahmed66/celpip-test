@@ -62,6 +62,8 @@ export default function Speaking() {
   }
 
   const next = `/speaking/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;
+ 
+  
   
 
   return (
@@ -71,6 +73,7 @@ export default function Speaking() {
       title={section.title}
       prevLink={pathname}
       nextLink={next}
+      isSpeakingTest={true}
     >
       <div className="min-h-[75vh] overflow-y-scroll">
         {!section.questionSets &&

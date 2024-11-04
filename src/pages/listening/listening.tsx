@@ -109,9 +109,11 @@ export default function Listening() {
             videoSrc={section.instructions[0].video}
           />
         )}
-        {section.instructions && section.instructions.length > 1 && (
-          <InstructionItem instructions={section.instructions.slice(1)} />
-        )}
+        {!section.questionSets &&
+          section.instructions &&
+          section.instructions.length > 1 && (
+            <InstructionItem instructions={section.instructions.slice(1)} />
+          )}
         {section.prepTime && (
           <Preparation
             info={section.description!}
@@ -128,14 +130,14 @@ export default function Listening() {
           </div>
         )}
         {section.questionSets &&
-          section.questionSets[0].questions.length > 1 && (
+          section.questionSets[0].questions[0].type === "mcq" &&  (
             <QuestionnaireComponent
               questions={section.questionSets[0].questions}
               sectionTitle={section.title}
             />
           )}
         {section.questionSets &&
-          section.questionSets[0].questions.length <= 1 && (
+          section.questionSets[0].questions[0].type === "simple" && (
             <div className="flex text-lg justify-evenly text-customLightBlue">
               <AudioSection
                 audioInfo={section.instructions?.[0]?.text || ""}
