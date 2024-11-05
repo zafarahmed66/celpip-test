@@ -40,11 +40,11 @@ export default function Dashboard() {
           </p>
         </div>
         {currentTest ? (
-          <div className="flex gap-2">
+          <div className="flex gap-2"><Link to={"/test"}>
             <Button>
-              {" "}
-              <Link to={"/test"}>Start</Link>
+              Start
             </Button>
+              </Link>
             <Button variant={"outline"}>Your Score</Button>
           </div>
         ) : (
