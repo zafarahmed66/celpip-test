@@ -17,7 +17,6 @@ const AudioSection = ({
   const [progress, setProgress] = useState(0);
   const audioRef = useRef(null);
 
-  console.log(audioUrl)
 
 
 const handlePlay = () => {
