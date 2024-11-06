@@ -25,6 +25,7 @@ const Navbar = () => {
     const currentTest = tests?.find((test) => test?._id === id);
     if (currentTest) {
       setCurrentTest(currentTest);
+      navigate("/")
     }
   };
 
@@ -41,6 +42,7 @@ const Navbar = () => {
           {test.title}
         </SelectItem>
       )),
+
     [tests]
   );
   return (
