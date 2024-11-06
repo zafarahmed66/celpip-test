@@ -130,14 +130,16 @@ export default function Listening() {
           </div>
         )}
         {section.questionSets &&
-          section.questionSets[0].questions[0].type === "mcq" &&  (
+          section.questionSets[0].questions.length > 1 && (
             <QuestionnaireComponent
               questions={section.questionSets[0].questions}
               sectionTitle={section.title}
             />
           )}
         {section.questionSets &&
-          section.questionSets[0].questions[0].type === "simple" && (
+          section.questionSets[0].questions[0].type === "mcq" &&
+          section.questionSets &&
+          section.questionSets[0].questions.length <= 1 && (
             <div className="flex text-lg justify-evenly text-customLightBlue">
               <AudioSection
                 audioInfo={section.instructions?.[0]?.text || ""}

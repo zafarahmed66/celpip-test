@@ -17,6 +17,7 @@ const AudioSection = ({
   const [progress, setProgress] = useState(0);
   const audioRef = useRef(null);
 
+  console.log(audioUrl)
 
 
 const handlePlay = () => {
@@ -51,11 +52,11 @@ const handlePlay = () => {
 
 
       <div className="py-2">
-        <div className="mx-auto bg-customGray py-6 px-10 rounded-md flex items-center justify-between w-fit gap-8">
-          <div className="bg-white p-2 rounded-sm">
+        <div className="flex items-center justify-between gap-8 px-10 py-6 mx-auto rounded-md bg-customGray w-fit">
+          <div className="p-2 bg-white rounded-sm">
             {!isCompleted ? <Volume2 /> : <Info />}
           </div>
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col items-center justify-center">
             <span>
               {!isCompleted ? "Playing..." : `Click "NEXT" to continue.`}
             </span>

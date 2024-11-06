@@ -50,6 +50,7 @@ export const ListeningProvider = ({ children }: { children: ReactNode }) => {
           setAttemptTestData
         );
         setListeningData(data);
+        console.log(data);
       }
       
     } catch {
