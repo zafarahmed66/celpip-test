@@ -16,7 +16,14 @@ const ListeningContext = createContext<ListeningContextType | undefined>(
 );
 
 export const ListeningProvider = ({ children }: { children: ReactNode }) => {
-  const { currentTest, setAttemptId, attemptId, moduleIds, attemptTestData, setAttemptTestData} = useTestContext();
+  const {
+    currentTest,
+    setAttemptId,
+    attemptId,
+    moduleIds,
+    attemptTestData,
+    setAttemptTestData,
+  } = useTestContext();
   const [listeningData, setListeningData] = useState<ListeningTest>();
   const [userAnswers, setUserAnswers] = useState<number[]>([]);
 
@@ -26,12 +33,11 @@ export const ListeningProvider = ({ children }: { children: ReactNode }) => {
     setUserAnswers(updatedAnswers);
   };
 
-
   const fetchListeningData = async () => {
     const module = currentTest?.modules.find(
       (module) => module.type === "Listening"
     );
-    if (module) {
+    if (module && userAnswers.length === 0) {
       setUserAnswers(new Array(module.pages.length).fill(-1));
     }
     try {
@@ -50,9 +56,7 @@ export const ListeningProvider = ({ children }: { children: ReactNode }) => {
           setAttemptTestData
         );
         setListeningData(data);
-        console.log(data);
       }
-      
     } catch {
       toast.error("Something went wrong!");
     }

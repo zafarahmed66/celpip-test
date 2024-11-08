@@ -9,10 +9,10 @@ interface TestContextType {
   setCurrentTest: (test: Test) => void;
   fetchTests: () => void;
   attemptId: string | null;
-  setAttemptId: (id: string) => void;
+  setAttemptId: (id: string | null) => void;
   moduleIds: string[];
   attemptTestData: AttemptTest | null;
-  setAttemptTestData: (test: AttemptTest) => void;
+  setAttemptTestData: (test: AttemptTest | null) => void;
 }
 
 const TestContext = createContext<TestContextType | undefined>(undefined);

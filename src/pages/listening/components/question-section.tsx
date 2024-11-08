@@ -40,8 +40,9 @@ const QuestionSection = ({
       (option) => option.image === value || option.text === value
     );
 
-    if (questionIndex) {
-      setUserAnswer(questionIndex, selectedIndex);
+
+    if (questionIndex != -1) {
+      setUserAnswer(questionIndex!, selectedIndex);
     } else {
       setUserAnswer(-1, selectedIndex);
     }

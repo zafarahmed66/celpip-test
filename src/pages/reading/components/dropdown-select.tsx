@@ -27,8 +27,12 @@ export const DropdownSelect: React.FC<DropdownSelectProps> = ({ question }) => {
     );
 
     const selectedIndex = options.findIndex((option) => option.text === value);
+    if (questionIndex != -1) {
+      setUserAnswer(questionIndex!, selectedIndex);
+    } else {
+      setUserAnswer(-1, selectedIndex);
 
-    setUserAnswer(questionIndex || -1, selectedIndex);
+    }
   };
   return (
     <Select

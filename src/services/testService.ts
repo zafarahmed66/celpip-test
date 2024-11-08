@@ -25,6 +25,7 @@ export const fetchAttempt = async (attemptId: string, type: string, attemptData:
     data = res.data
     setData(data);
   }
+
   const result = data.result.modules.find((module: any) => module.type === type);
   return result;
 };

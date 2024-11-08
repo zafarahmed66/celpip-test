@@ -18,6 +18,7 @@ import { useEffect } from "react";
 
 export default function ReadingAnswerKeyPage() {
   const { readingData, userAnswers, fetchReadingData } = useReadingContext();
+  console.log(userAnswers)
   const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } =
     useTestContext();
   const [searchParams] = useSearchParams();

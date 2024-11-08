@@ -62,7 +62,6 @@ const ReadingResult = () => {
   };
 
   const nextModule = getNextModule("reading", currentTest!);
-  console.log(nextModule);
   if (nextModule === "/") {
     toast.success("All test are completed!");
     return <Navigate to="/" />;

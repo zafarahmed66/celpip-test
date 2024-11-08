@@ -34,23 +34,17 @@ const VideoInstruction = ({
 
       switch (moduleType) {
         case "Writing":
-          console.log("fetching writing");
           fetchWritingData();
           break;
         case "Reading":
-          console.log("fetching reading");
           fetchReadingData();
           break;
         case "Speaking":
-          console.log("fetching speaking");
           fetchSpeakingData();
           break;
         case "Listening":
-          console.log("fetching listening");
           fetchListeningData();
           break;
-        default:
-          console.log("No valid module type");
       }
     }
   }, [currentTest]);

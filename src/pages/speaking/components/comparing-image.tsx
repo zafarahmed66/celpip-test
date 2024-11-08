@@ -53,10 +53,11 @@ export default function ComparingImage({
     return () => clearInterval(interval);
   }, []);
 
+console.log()
   return (
     <div>
-      <div className="font-medium mb-4 text-customLightBlue">
-        <span className="inline-block bg-customLightBlue text-white rounded-full w-6 h-6 text-center mr-2">
+      <div className="mb-4 font-medium text-customLightBlue">
+        <span className="inline-block w-6 h-6 mr-2 text-center text-white rounded-full bg-customLightBlue">
           i
         </span>
         {isPreparationPhase ? (
@@ -64,11 +65,11 @@ export default function ComparingImage({
             <span>{question.text}</span>
           </>
         ) : (
-          <span>{comparison?.info}</span>
+          <span>{question?.defaultAnswer?.text}</span>
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card
           onClick={() => handleImageSelect(image1)}
           className={cn(
@@ -77,7 +78,7 @@ export default function ComparingImage({
           )}
         >
           {!isPreparationPhase && (
-            <p className="text-center mt-2 text-gray-600 text-sm font-medium">
+            <p className="mt-2 text-sm font-medium text-center text-gray-600">
               Your family's choice
             </p>
           )}
@@ -87,10 +88,10 @@ export default function ComparingImage({
               alt={image1.title}
               width={300}
               height={250}
-              className="w-full h-64 object-cover mb-4"
+              className="object-cover w-full h-64 mb-4"
             />
             <h3 className="text-sm text-gray-600">{image1.title}</h3>
-            <div className="whitespace-pre-wrap   text-sm mt-4 list-inside text-gray-600">
+            <div className="mt-4 text-sm text-gray-600 whitespace-pre-wrap list-inside">
               {image1.text}
             </div>
           </CardContent>
@@ -105,7 +106,7 @@ export default function ComparingImage({
           )}
         >
           {!isPreparationPhase && (
-            <p className="text-center mt-2 text-gray-600 text-sm font-medium">
+            <p className="mt-2 text-sm font-medium text-center text-gray-600">
               Your's choice
             </p>
           )}
@@ -116,10 +117,10 @@ export default function ComparingImage({
               alt={image2.title}
               width={300}
               height={250}
-              className="w-full h-64 object-cover mb-4"
+              className="object-cover w-full h-64 mb-4"
             />
             <h3 className="text-sm text-gray-600">{image2.title}</h3>
-            <div className="whitespace-pre-wrap  text-sm mt-4 list-inside text-gray-600">
+            <div className="mt-4 text-sm text-gray-600 whitespace-pre-wrap list-inside">
               {image1.text}
             </div>
           </CardContent>

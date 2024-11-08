@@ -9,9 +9,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Test } from "@/types/test";
+import { useEffect } from "react";
 
 export default function Dashboard() {
-  const { currentTest, tests } = useTestContext();
+  const { currentTest, tests, setAttemptId, setAttemptTestData } =
+    useTestContext();
+
+  useEffect(() => {
+    setAttemptId(null);
+    setAttemptTestData(null);
+  }, [currentTest]);
   return (
     <section>
       <div className="flex flex-col items-center max-w-5xl gap-8 p-8 mx-auto my-8 bg-white shadow-sm">
@@ -40,11 +47,10 @@ export default function Dashboard() {
           </p>
         </div>
         {currentTest ? (
-          <div className="flex gap-2"><Link to={"/test"}>
-            <Button>
-              Start
-            </Button>
-              </Link>
+          <div className="flex gap-2">
+            <Link to={"/test"}>
+              <Button>Start</Button>
+            </Link>
             <Button variant={"outline"}>Your Score</Button>
           </div>
         ) : (

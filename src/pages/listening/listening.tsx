@@ -58,6 +58,8 @@ export default function Listening() {
       }
     }
   }, [section]);
+  const next = `/listening/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -86,7 +88,7 @@ export default function Listening() {
     );
   }
 
-  const next = `/listening/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;
+
 
   return (
     <CardLayout

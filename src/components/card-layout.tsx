@@ -35,6 +35,18 @@ export default function CardLayout({
   hasAnswerKey = false,
   isSpeakingTest = false,
 }: CardLayout) {
+  const location = useLocation();
+    const isLastPage = location.pathname.includes("speaking/end-page");
+
+    const showTime = location.pathname.includes("speaking")
+      ? "Prepartion: "
+      : "Remaining time: ";
+
+    const answerKey = location.pathname.includes("listening")
+      ? "/listening/answer-key"
+      : "/reading/answer-key";
+  
+  
   const displayTimer = (time: number) => {
     if (time) {
       if (time > 60) {
@@ -43,20 +55,12 @@ export default function CardLayout({
         return `${timer} second${time > 1 ? "s" : ""}`;
       }
     } else {
+    
       return "None";
     }
   };
 
-  const location = useLocation();
-  const isLastPage = location.pathname.includes("speaking/end-page");
 
-  const showTime = location.pathname.includes("speaking")
-    ? "Prepartion: "
-    : "Remaining time ";
-
-  const answerKey = location.pathname.includes("listening")
-    ? "/listening/answer-key"
-    : "/reading/answer-key";
   return (
     <section className="container px-4 py-8 mx-auto sm:px-6 lg:px-8">
       <Card className="max-w-5xl mx-auto overflow-hidden bg-white border border-gray-300 shadow">

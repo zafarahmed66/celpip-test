@@ -25,6 +25,7 @@ export const ReadingProvider = ({ children }: { children: ReactNode }) => {
   const [userAnswers, setUserAnswers] = useState<number[]>([]);
 
   const setUserAnswer = (index: number, answer: number) => {
+    console.log(index, answer)
     const updatedAnswers = [...userAnswers];
     updatedAnswers[index] = answer;
     setUserAnswers(updatedAnswers);
@@ -34,7 +35,7 @@ export const ReadingProvider = ({ children }: { children: ReactNode }) => {
     const module = currentTest?.modules.find(
       (module) => module.type === "Reading"
     );
-    if (module) {
+    if (module && userAnswers.length === 0) {
       setUserAnswers(new Array(module.pages.length).fill(-1));
     }
     try {

@@ -22,9 +22,9 @@ const Navbar = () => {
   }, [fetchTests]);
 
   const handleChange = (id: string) => {
-    const currentTest = tests?.find((test) => test?._id === id);
-    if (currentTest) {
-      setCurrentTest(currentTest);
+    const changedTest = tests?.find((test) => test?._id === id);
+    if (changedTest) {
+      setCurrentTest(changedTest);
       navigate("/")
     }
   };

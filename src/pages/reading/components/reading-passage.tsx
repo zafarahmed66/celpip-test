@@ -17,7 +17,9 @@ export const ReadingPassage: React.FC<ReadingPassageProps> = ({
           {passageInfo}
         </h2>
       )}
-      <div className="text-sm text-gray-600 whitespace-pre-wrap">{content}</div>
+      {content.startsWith("http") ?
+     <img src={content} />
+     : <div className="text-sm text-gray-600 whitespace-pre-wrap">{content}</div>}
     </div>
   );
 };
