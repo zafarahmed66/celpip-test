@@ -20,17 +20,22 @@ const TestContext = createContext<TestContextType | undefined>(undefined);
 export const TestProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [tests, setTests] = useState<Test[]>([]); 
-  const [attemptId, setAttemptId] = useState < string | null>(null); 
+  const [tests, setTests] = useState<Test[]>([]);
+  const [attemptId, setAttemptId] = useState<string | null>(null);
   const [currentTest, setCurrentTest] = useState<Test | null>(null);
-  const [attemptTestData, setAttemptTestData] = useState<AttemptTest | null>(null);
+  const [attemptTestData, setAttemptTestData] = useState<AttemptTest | null>(
+    null
+  );
   const [moduleIds, setModuleIds] = useState<string[]>([]);
 
   const fetchTests = async () => {
     if (tests.length === 0) {
       try {
         const data = await getAllTests();
-        setTests(data.result.data);
+        const sortedData = data.result.data.sort((a: Test, b: Test) => {
+          return a.title.localeCompare(b.title);
+        });
+        setTests(sortedData);
       } catch (error) {
         console.error("Failed to fetch tests", error);
       }
@@ -47,8 +52,7 @@ export const TestProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const ids = getModuleIds();
     setModuleIds(ids);
-  }, [currentTest])
-
+  }, [currentTest]);
 
   return (
     <TestContext.Provider
@@ -61,8 +65,8 @@ export const TestProvider: React.FC<{ children: React.ReactNode }> = ({
         attemptId,
         setAttemptId,
         moduleIds,
-        attemptTestData, 
-        setAttemptTestData
+        attemptTestData,
+        setAttemptTestData,
       }}
     >
       {children}
