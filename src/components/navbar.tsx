@@ -14,7 +14,7 @@ import { toast } from "sonner";
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
-  const { tests, setCurrentTest, fetchTests } = useTestContext();
+  const { tests, setCurrentTest, fetchTests, currentTest } = useTestContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Navbar = () => {
     const changedTest = tests?.find((test) => test?._id === id);
     if (changedTest) {
       setCurrentTest(changedTest);
-      navigate("/")
+      navigate("/");
     }
   };
 
@@ -43,8 +43,9 @@ const Navbar = () => {
         </SelectItem>
       )),
 
-    [tests]
+    [tests, currentTest]
   );
+
   return (
     <header className="bg-white shadow-md">
       <div className="flex items-center justify-between px-4 py-2 lg:px-6">
@@ -69,7 +70,10 @@ const Navbar = () => {
             <p className="hidden md:block text-sm text-[#262161] font-semibold">
               Selected Product:{" "}
             </p>
-            <Select onValueChange={handleChange}>
+            <Select
+              onValueChange={handleChange}
+              value={currentTest?._id || undefined}
+            >
               <SelectTrigger className="w-fit">
                 <SelectValue placeholder="Click to Select Product" />
               </SelectTrigger>
