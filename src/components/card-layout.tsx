@@ -36,17 +36,16 @@ export default function CardLayout({
   isSpeakingTest = false,
 }: CardLayout) {
   const location = useLocation();
-    const isLastPage = location.pathname.includes("speaking/end-page");
+  const isLastPage = location.pathname.includes("speaking/end-page");
 
-    const showTime = location.pathname.includes("speaking")
-      ? "Prepartion: "
-      : "Remaining time: ";
+  const showTime = location.pathname.includes("speaking")
+    ? "Prepartion: "
+    : "Remaining time: ";
 
-    const answerKey = location.pathname.includes("listening")
-      ? "/listening/answer-key"
-      : "/reading/answer-key";
-  
-  
+  const answerKey = location.pathname.includes("listening")
+    ? "/listening/answer-key"
+    : "/reading/answer-key";
+
   const displayTimer = (time: number) => {
     if (time) {
       if (time > 60) {
@@ -55,11 +54,9 @@ export default function CardLayout({
         return `${timer} second${time > 1 ? "s" : ""}`;
       }
     } else {
-    
       return "None";
     }
   };
-
 
   return (
     <section className="container px-4 py-8 mx-auto sm:px-6 lg:px-8">
@@ -72,8 +69,8 @@ export default function CardLayout({
           <h2
             className={cn(
               "text-gray-600",
-              title.length > 50 && "text-sm",
-              title.length > 70 && "text-xs"
+              title?.length > 50 && "text-sm",
+              title?.length > 70 && "text-xs"
             )}
           >
             {title}
@@ -108,9 +105,7 @@ export default function CardLayout({
                     timer >= 60 && "text-gray-700 font-medium"
                   )}
                 >
-                  {isSpeakingTest
-                    ? `${timer} seconds`
-                    : displayTimer(timer)}
+                  {isSpeakingTest ? `${timer} seconds` : displayTimer(timer)}
                 </span>
               </p>
             )}
