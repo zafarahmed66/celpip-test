@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "@/components/layout";
 import Test from "./pages/home/test";
 import VideoInstruction from "./components/video-instruction";
-import { completeTestData } from "./data/completeTest";
 import ReadingAnswerKey from "./pages/reading/components/reading-answer-key";
 import Writing from "./pages/writing/writing";
 import Listening from "./pages/listening/listening";
@@ -84,7 +83,6 @@ const router = createBrowserRouter([
           <VideoInstruction
             title="Overview Instructional Video"
             prevLink="/"
-            videoSrc={completeTestData.videoUrl}
           />
         ),
       },

@@ -43,7 +43,7 @@ export default function Writing() {
   }, [currentTest]);
   
   useEffect(() => {
-    setTimer(section?.duration)
+    setTimer(section?.duration || undefined)
   }, [section])
   
   const next = `/writing/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;

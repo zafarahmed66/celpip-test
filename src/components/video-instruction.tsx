@@ -5,18 +5,16 @@ import { useSpeakingContext } from "@/context/SpeakingContext";
 import { useTestContext } from "@/context/TestContext";
 import { useWritingContext } from "@/context/WritingContext";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 
 interface VideoInstructionProps {
   title: string;
   prevLink: string;
-  videoSrc: string;
 }
 
 const VideoInstruction = ({
   title,
   prevLink,
-  videoSrc,
 }: VideoInstructionProps) => {
   const { currentTest, attemptId, tests, setCurrentTest } = useTestContext();
   const { fetchWritingData } = useWritingContext();
@@ -66,10 +64,31 @@ const VideoInstruction = ({
     }
   }, [currentTest, attemptId]);
 
+  if (
+   ( currentTest &&
+    currentTest.instructions.length === 0 )||
+    (currentTest && currentTest.instructions.length > 0 &&
+    !("video" in currentTest.instructions[0]))
+  ) {
+    return (
+      <Navigate
+        to={`/${currentTest.modules[0].type.toLowerCase()}/1?testId=${currentTest._id}&attemptId=${attemptId}`}
+      />
+    );
+  }
+
   return (
     <CardLayout title={title} nextLink={nextLink} prevLink={prevLink}>
       <div className="py-8 px-16  min-h-[75vh] bg-gray-50">
-        <video controls src={videoSrc} className="w-full h-[50vh]" autoPlay />
+          <video
+          controls
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+            src={currentTest?.instructions[0].video}
+            className="w-full h-[50vh]"
+            autoPlay
+          />
+        
       </div>
     </CardLayout>
   );

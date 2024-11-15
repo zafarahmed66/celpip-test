@@ -14,12 +14,15 @@ export interface Module {
   testId: string;
 }
 
+type Instruction = { text: string } | { audio: string } | { video : string};
+
+
 export interface Test {
   _id: string;
   title: string;
   description: string;
   modules: Module[];
-  instructions: string[];
+  instructions: Instruction[];
   createdAt: string;
   updatedAt: string;
 }
