@@ -14,6 +14,7 @@ interface QuestionSectionProps {
   options: Choice[];
   title: string;
   audioSrc: string;
+  setEnableNext: (value: boolean) => void
 }
 
 const QuestionSection = ({
@@ -21,6 +22,7 @@ const QuestionSection = ({
   question,
   title,
   audioSrc,
+  setEnableNext
 }: QuestionSectionProps) => {
   const { listeningData, setUserAnswer } = useListeningContext();
   if (!listeningData) {
@@ -39,6 +41,8 @@ const QuestionSection = ({
     const selectedIndex = options.findIndex(
       (option) => option.image === value || option.text === value
     );
+
+    setEnableNext(true)
 
 
     if (questionIndex != -1) {

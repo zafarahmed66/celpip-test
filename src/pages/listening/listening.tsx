@@ -4,7 +4,7 @@ import InstructionItem from "@/components/instruction-item";
 import InstructionVideo from "@/components/instruction-video";
 import { useListeningContext } from "@/context/ListeningContext";
 import { useEffect, useState } from "react";
-import { Navigate, useLocation, useParams, useSearchParams } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import AudioSection from "./components/audio-section";
 import QuestionSection from "./components/question-section";
 import Preparation from "./components/preparation";
@@ -59,21 +59,27 @@ export default function Listening() {
     }
   }, [section]);
   const next = `/listening/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;
-
+  const navigator = useNavigate();
 
   useEffect(() => {
+    if(section?.duration){
+
     const interval = setInterval(() => {
       setTimer((prev) => {
         if (prev && prev > 0) {
           return prev - 1;
         } else {
+          clearInterval(interval); 
+          navigator(next); 
           return undefined;
         }
       });
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearInterval(interval); 
+    }
+      
+  }, [next, navigator]);
 
   if (!listeningData) {
     return <div>Loading...</div>;
@@ -87,6 +93,7 @@ export default function Listening() {
       />
     );
   }
+
 
 
 
@@ -152,7 +159,8 @@ export default function Listening() {
                 audioSrc={section.questionSets[0].questions[0].text}
                 title={section.title}
                 question={section.questionSets[0].instructions?.[0]?.text || ""}
-                options={section.questionSets[0].questions[0].choices!}
+              options={section.questionSets[0].questions[0].choices!}
+              setEnableNext={setEnableNext}
               />
             </div>
           )}

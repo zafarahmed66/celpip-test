@@ -16,7 +16,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
   }
   return (
     <div>
-      <h2 className="mb-4 font-medium text-customLightBlue">
+      <h2 className="mt-2 mb-4 font-medium text-customLightBlue">
         <span className="inline-block w-6 h-6 mr-2 text-center text-white rounded-full bg-customLightBlue">
           i
         </span>

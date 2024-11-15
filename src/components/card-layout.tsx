@@ -49,7 +49,7 @@ export default function CardLayout({
   const displayTimer = (time: number) => {
     if (time) {
       if (time > 60) {
-        return `${Math.floor(time / 60)} minute${Math.floor(time / 60) > 1 ? "s" : ""}`;
+        return `${Math.ceil(time / 60)} minute${Math.ceil(time / 60) > 1 ? "s" : ""}`;
       } else if (time > 0) {
         return `${timer} second${time > 1 ? "s" : ""}`;
       }

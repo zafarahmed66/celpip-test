@@ -1,3 +1,5 @@
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 interface SimpleQuesionProps {
   instructions: {
     text: string;
@@ -10,14 +12,14 @@ export default function SimpleQuesion({
     questionInfo
 }: SimpleQuesionProps) {
   return (
-    <div className="col-span-2 p-4 bg-customSkyBlue border-l border-gray-300 h-[75vh] overflow-y-scroll">
-      <h2 className="font-medium mb-4 text-customLightBlue">
-        <span className="inline-block bg-customLightBlue text-white rounded-full w-6 h-6 text-center mr-2">
+    <ScrollArea className="col-span-2 p-4 bg-customSkyBlue border-l border-gray-300 h-[75vh]">
+      <h2 className="mb-4 font-medium text-customLightBlue">
+        <span className="inline-block w-6 h-6 mr-2 text-center text-white rounded-full bg-customLightBlue">
           i
         </span>
         {questionInfo}
       </h2>
-      <ul className="list-disc pl-8">
+      <ul className="pl-8 list-disc">
         {instructions.map((instruction, index) => (
           <li key={index} className="text-sm">
             {instruction.text}
@@ -28,8 +30,8 @@ export default function SimpleQuesion({
       <textarea
         name=""
         id=""
-        className="w-full h-[60%] rounded-md border mt-8 p-2"
+        className="w-full p-2 mt-8 border rounded-md h-80"
       ></textarea>
-    </div>
+    </ScrollArea>
   );
 }

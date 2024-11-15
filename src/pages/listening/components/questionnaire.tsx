@@ -1,3 +1,4 @@
+import React from "react";
 import { Info } from "lucide-react";
 import {
   Select,
@@ -49,32 +50,41 @@ const QuestionnaireComponent = ({
       </div>
 
       <ol className="space-y-4">
-        {questions.map((question, index) => (
-          <li
-            key={index}
-            className="flex items-center gap-2 text-sm text-gray-600"
-          >
-            <span className="">{index + 1}.</span>
-            <span className="">{question.text}</span>
-            <Select
-              onValueChange={(value) =>
-                handleChange(value, question.text, question.choices!)
-              }
+        {questions.map((question, index) => {
+          const textParts = question.text.split("<<>>");
+          return (
+            <li
+              key={index}
+              className="flex items-center gap-2 text-sm text-gray-600"
             >
-              <SelectTrigger className="text-xl font-semibold bg-white border-none rounded-none min-w-20 w-fit focus:outline-none focus:ring-0">
-                <SelectValue placeholder="" />
-              </SelectTrigger>
-              <SelectContent>
-                {question.choices &&
-                  question.choices.map((option, index) => (
-                    <SelectItem key={index} value={option.text!}>
-                      {option.text}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-          </li>
-        ))}
+              <span className="">{index + 1}.</span>
+              {textParts.map((part, i) => (
+                <React.Fragment key={i}>
+                  <span className="">{part}</span>
+                  {i < textParts.length - 1 && (
+                    <Select
+                      onValueChange={(value) =>
+                        handleChange(value, question.text, question.choices!)
+                      }
+                    >
+                      <SelectTrigger className="text-xl font-semibold bg-white border-none rounded-none min-w-20 w-fit focus:outline-none focus:ring-0">
+                        <SelectValue placeholder="" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {question.choices &&
+                          question.choices.map((option, index) => (
+                            <SelectItem key={index} value={option.text!}>
+                              {option.text}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                </React.Fragment>
+              ))}
+            </li>
+          );
+        })}
       </ol>
     </div>
   );

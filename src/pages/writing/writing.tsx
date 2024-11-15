@@ -3,7 +3,7 @@ import InsructionHeader from "@/components/instruction-header";
 import InstructionItem from "@/components/instruction-item";
 import InstructionVideo from "@/components/instruction-video";
 import { useWritingContext } from "@/context/WritingContext";
-import { Navigate, useLocation, useParams, useSearchParams } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import SimpleQuesion from "./components/simple-question";
 import { ScenarioSection } from "./components/scenario-section";
 import { MCQQuestion } from "./components/mcq-question";
@@ -45,19 +45,28 @@ export default function Writing() {
   useEffect(() => {
     setTimer(section?.duration)
   }, [section])
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((prev) => {
-        if (prev && prev > 0) {
-          return prev - 1;
-        } else {
-          return undefined;
-        }
-      });
-    }, 1000);
+  
+  const next = `/writing/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;
 
-    return () => clearInterval(interval);
-  }, []);
+  const navigator = useNavigate();
+
+  useEffect(() => {
+    if (section?.duration) {
+      const interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev && prev > 0) {
+            return prev - 1;
+          } else {
+            clearInterval(interval);
+            navigator(next);
+            return undefined;
+          }
+        });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [next, navigator]);
 
   if (!writingData) {
     return <div>Loading...</div>;
@@ -79,7 +88,6 @@ export default function Writing() {
     );
   }
 
-  const next = `/writing/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;
 
   return (
     <CardLayout
@@ -88,7 +96,7 @@ export default function Writing() {
       prevLink={pathname}
       nextLink={next}
     >
-      <div className="min-h-[75vh] overflow-y-scroll">
+      <div className="min-h-[75vh]">
         {section.instructions &&
           Array.isArray(section.instructions) &&
           !section.questionSets &&

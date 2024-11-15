@@ -12,15 +12,15 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { ReadingPassage } from "./components/reading-passage";
-import { QuestionSet } from "./components/question-set";
+import { QuestionSet } from "../../components/question-set";
 import { useTestContext } from "@/context/TestContext";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Reading() {
   const { sectionId } = useParams();
   const { pathname } = useLocation();
   const { readingData, fetchReadingData } = useReadingContext();
-  const { tests, attemptId, currentTest, setCurrentTest } =
-    useTestContext();
+  const { tests, attemptId, currentTest, setCurrentTest } = useTestContext();
 
   const id = parseInt(sectionId!);
   const section = readingData?.pages[id - 1];
@@ -41,15 +41,12 @@ export default function Reading() {
     }
   }, [testId, tests]);
 
-  
   useEffect(() => {
     if (currentTest) {
       fetchReadingData();
     }
   }, [currentTest]);
 
-
-  
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((prev) => {
@@ -82,6 +79,7 @@ export default function Reading() {
     );
   }
 
+
   return (
     <CardLayout
       timer={timer}
@@ -90,7 +88,7 @@ export default function Reading() {
       nextLink={next}
       hasAnswerKey={section.questionSets !== undefined || false}
     >
-      <div className="min-h-[75vh] overflow-y-scroll">
+      <div className="min-h-[75vh]">
         {!section.questionSets &&
           section.instructions &&
           section.instructions[0].text && (
@@ -119,7 +117,7 @@ export default function Reading() {
                 ""
               }
             />
-            <div className="p-4 space-y-6 border-l border-gray-300 bg-customSkyBlue h-[75vh] overflow-y-scroll">
+            <ScrollArea className="p-4 space-y-6 border-l border-gray-300 bg-customSkyBlue h-[75vh]">
               {section.questionSets.map((question, index) => (
                 <QuestionSet
                   key={index}
@@ -127,7 +125,7 @@ export default function Reading() {
                   questionInfo={question.instructions?.[0]?.text || ""}
                 />
               ))}
-            </div>
+            </ScrollArea>
           </div>
         )}
       </div>
