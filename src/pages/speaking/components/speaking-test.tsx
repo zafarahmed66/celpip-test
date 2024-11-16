@@ -1,11 +1,12 @@
 import { Separator } from "@/components/ui/separator";
 import Timer from "./timer";
+import { Instruction } from "@/types/speaking";
 
 interface SpeakingTestProps {
   title: string;
   preparationTime: number;
   recordingTime: number;
-  additionalInfo?: string;
+  additionalInfo?: Instruction[];
 }
 
 export default function SpeakingTest({
@@ -24,7 +25,9 @@ export default function SpeakingTest({
         {title}
       </h2>
       {
-      additionalInfo &&  <div className="font-medium text-gray-600 whitespace-pre-wrap">{additionalInfo}</div>
+        additionalInfo?.map((info, index) => (
+          <div key={index}>{ info.text}</div>
+      ))
 
       }
       <Separator className="my-8" />

@@ -6,9 +6,20 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTestContext } from "@/context/TestContext";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Module } from "@/types/test";
 
 interface CardLayout {
   title: string;
@@ -35,6 +46,7 @@ export default function CardLayout({
   hasAnswerKey = false,
   isSpeakingTest = false,
 }: CardLayout) {
+  const { currentTest } = useTestContext();
   const location = useLocation();
   const isLastPage = location.pathname.includes("speaking/end-page");
 
@@ -58,73 +70,82 @@ export default function CardLayout({
     }
   };
 
+
+
   return (
     <section className="container px-4 py-8 mx-auto sm:px-6 lg:px-8">
       <Card className="max-w-5xl mx-auto overflow-hidden bg-white border border-gray-300 shadow">
         <CardHeader
           className={cn(
-            "flex flex-row justify-between items-center bg-gray-200 py-2 border-gray-300 border-b"
+            "bg-gray-200 py-2 border-gray-300 border-b space-y-4"
           )}
         >
-          <h2
-            className={cn(
-              "text-gray-600",
-              title?.length > 50 && "text-sm",
-              title?.length > 70 && "text-xs"
-            )}
-          >
-            {title}
-          </h2>
-          <div className="relative gap-4 text-sm">
-            {recordingTime !== undefined && (
-              <p className="absolute right-80 top-2 w-[180px]">
-                Recording:{" "}
-                <span
-                  className={cn(
-                    "text-red-600",
-                    recordingTime >= 60 && "text-gray-700 font-medium"
-                  )}
-                >
-                  {isSpeakingTest
-                    ? `${recordingTime} seconds`
-                    : displayTimer(recordingTime)}
-                </span>
-              </p>
-            )}
-            {timer !== undefined && (
-              <p
-                className={cn(
-                  "absolute right-32 top-2 w-[190px]",
-                  location.pathname.includes("speaking") && "w-[190px]"
-                )}
-              >
-                {showTime}
-                <span
-                  className={cn(
-                    "text-red-600",
-                    timer >= 60 && "text-gray-700 font-medium"
-                  )}
-                >
-                  {isSpeakingTest ? `${timer} seconds` : displayTimer(timer)}
-                </span>
-              </p>
-            )}
-            <div className="flex gap-2">
-              <Button
-                variant={"outline"}
-                disabled={isPrevDisabled}
-                onClick={() => prevLink && window.history.back()}
-              >
-                <ChevronLeft />
-              </Button>
-
-              {!isLastPage && enableNext && (
-                <Link to={nextLink!}>
-                  <Button variant={"outline"}>
-                    <ChevronRight />
-                  </Button>
-                </Link>
+          <div className="flex justify-between pt-1">
+            {currentTest?.modules.map((module) => (
+              <ConfirmationModal {...module} />
+            ))}
+          </div>
+          <div className="flex flex-row items-center justify-between">
+            <h2
+              className={cn(
+                "text-gray-600",
+                title?.length > 50 && "text-sm",
+                title?.length > 70 && "text-xs"
               )}
+            >
+              {title}
+            </h2>
+            <div className="relative gap-4 text-sm">
+              {recordingTime !== undefined && (
+                <p className="absolute right-80 top-2 w-[180px]">
+                  Recording:{" "}
+                  <span
+                    className={cn(
+                      "text-red-600",
+                      recordingTime >= 60 && "text-gray-700 font-medium"
+                    )}
+                  >
+                    {isSpeakingTest
+                      ? `${recordingTime} seconds`
+                      : displayTimer(recordingTime)}
+                  </span>
+                </p>
+              )}
+              {timer !== undefined && (
+                <p
+                  className={cn(
+                    "absolute right-32 top-2 w-[190px]",
+                    location.pathname.includes("speaking") && "w-[190px]"
+                  )}
+                >
+                  {showTime}
+                  <span
+                    className={cn(
+                      "text-red-600",
+                      timer >= 60 && "text-gray-700 font-medium"
+                    )}
+                  >
+                    {isSpeakingTest ? `${timer} seconds` : displayTimer(timer)}
+                  </span>
+                </p>
+              )}
+              <div className="flex gap-2">
+                <Button
+                  variant={"outline"}
+                  disabled={isPrevDisabled}
+                  onClick={() => prevLink && window.history.back()}
+                >
+                  <ChevronLeft />
+                </Button>
+
+                {!isLastPage && enableNext && (
+                  <Link to={nextLink!}>
+                    <Button variant={"outline"}>
+                      <ChevronRight />
+                    </Button>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         </CardHeader>
@@ -147,5 +168,58 @@ export default function CardLayout({
         )}
       </Card>
     </section>
+  );
+}
+
+
+
+
+function ConfirmationModal(module : Module) {
+  const naviate = useNavigate();
+  const { currentTest, attemptId } = useTestContext();
+  const location = useLocation();
+  
+
+
+    const handleModuleChange = (module: string) => {
+      naviate(`/${module}/1?testId=${currentTest?._id}&attemptId=${attemptId}`);
+    };
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          // disabled={location.pathname.includes(module.type.toLowerCase())}
+          className={`px-12 ${location.pathname.includes(module.type.toLowerCase()) && 'pointer-events-none'}`}
+          variant={
+            location.pathname.includes(module.type.toLowerCase())
+              ? "default"
+              : "outline"
+          }
+          id={module._id}
+        >
+          {module.type}
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogDescription>
+            Are you sure you want to abandon current test and initiate{" "}
+            <strong>{module.type}</strong> of{" "}
+            <strong> {currentTest?.title}</strong>
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter className="sm:justify-start">
+          <DialogClose asChild>
+            <Button type="button" variant="outline">
+              Cancel
+            </Button>
+          </DialogClose>
+          <Button onClick={() => handleModuleChange(module.type.toLowerCase())}>
+            Proceed
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

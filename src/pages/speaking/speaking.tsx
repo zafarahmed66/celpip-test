@@ -62,6 +62,7 @@ export default function Speaking() {
   }
 
   const next = `/speaking/${id + 1}?testId=${currentTest?._id}&attemptId=${attemptId}`;
+
  
   
   
@@ -133,6 +134,7 @@ export default function Speaking() {
                     section.recordingTime ? section.recordingTime : 0
                   }
                   title={section.questionSets[0].questions[0].text}
+                  additionalInfo={section.questionSets[0].instructions}
                 />
               </div>
             </>

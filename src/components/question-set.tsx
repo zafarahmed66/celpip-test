@@ -5,11 +5,13 @@ import React from "react";
 interface QuestionSetProps {
   questions: Question[];
   questionInfo: string;
+  startNumber: number; 
 }
 
 export const QuestionSet: React.FC<QuestionSetProps> = ({
   questions,
   questionInfo,
+  startNumber,
 }) => {
   if (questions.length === 0) {
     return null;
@@ -25,13 +27,14 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
       <div className="p-4 space-y-2 border border-black rounded-md">
         {questions.map((question, index) => {
           const textParts = question.text.split("<<>>");
+          const questionNumber = startNumber + index; 
 
           return (
             <div
               key={index}
               className="flex flex-wrap items-center gap-2 text-sm text-gray-600"
             >
-              <span className="">{index + 1}.</span>
+              <span className="">{questionNumber}.</span>
               {textParts.map((part, i) => (
                 <React.Fragment key={i}>
                   <span>{part}</span>

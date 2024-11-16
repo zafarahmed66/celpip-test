@@ -79,6 +79,7 @@ export default function Reading() {
     );
   }
 
+let questionNumber = 0;
 
   return (
     <CardLayout
@@ -117,14 +118,17 @@ export default function Reading() {
                 ""
               }
             />
-            <ScrollArea className="p-4 space-y-6 border-l border-gray-300 bg-customSkyBlue h-[75vh]">
-              {section.questionSets.map((question, index) => (
-                <QuestionSet
+            <ScrollArea className="p-4 space-y-6 border-l border-gray-300 bg-customSkyBlue h-[75vh] pb-12">
+              {section.questionSets.map((question, index) => {
+                const startNumber = questionNumber + 1; 
+                  questionNumber += question.questions.length; 
+               return <QuestionSet
                   key={index}
                   questions={question.questions}
-                  questionInfo={question.instructions?.[0]?.text || ""}
+                 questionInfo={question.instructions?.[0]?.text || ""}
+                 startNumber={startNumber}
                 />
-              ))}
+              })}
             </ScrollArea>
           </div>
         )}
