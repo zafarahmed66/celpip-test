@@ -209,7 +209,7 @@ function ConfirmationModal(module : Module) {
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="sm:justify-start">
+        <DialogFooter className="mx-auto sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="outline">
               Cancel
