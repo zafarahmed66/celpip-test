@@ -18,7 +18,6 @@ import { useEffect } from "react";
 
 export default function ReadingAnswerKeyPage() {
   const { readingData, userAnswers, fetchReadingData } = useReadingContext();
-  console.log(userAnswers)
   const { tests, attemptId, setAttemptId, currentTest, setCurrentTest } =
     useTestContext();
   const [searchParams] = useSearchParams();
@@ -49,7 +48,7 @@ export default function ReadingAnswerKeyPage() {
   let currentIndex = 1;
   return (
     <CardLayout
-      title={"Practice Test A - Reading Answer Key"}
+      title={`${currentTest?.title} - Reading Answer Key`}
       nextLink={`/reading/result?testId=${testId}&attemptId=${attemptId}`}
     >
       <div className="p-4">

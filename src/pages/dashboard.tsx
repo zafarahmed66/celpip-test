@@ -38,20 +38,13 @@ export default function Dashboard() {
             the key factors that HZad Education raters consider when they assess
             Writing and Speaking responses.
           </p>
-          <p className="text-sm">
-            Click{" "}
-            <span className="cursor-pointer text-customBlue hover:underline">
-              here
-            </span>{" "}
-            to complete a survey on this product. We appreciate your feedback!
-          </p>
+         
         </div>
         {currentTest ? (
           <div className="flex gap-2">
             <Link to={"/test"}>
               <Button>Start</Button>
             </Link>
-            <Button variant={"outline"}>Your Score</Button>
           </div>
         ) : (
           <div className="flex gap-2">
@@ -60,11 +53,7 @@ export default function Dashboard() {
               label="Start Test"
               tests={tests!}
             />
-            <DropDownSelect
-              variant="outline"
-              label="Your Score"
-              tests={tests!}
-            />
+           
           </div>
         )}
         <div className="space-y-4 text-sm text-center text-customBlue">

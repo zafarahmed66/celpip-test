@@ -52,7 +52,7 @@ export default function ListeningAnswerKeyPage() {
   let currentIndex = 1;
   return (
     <CardLayout
-      title={"Practice Test A - Listening Answer Key"}
+      title={`${currentTest?.title} - Listening Answer Key`}
       nextLink={"/listening/result"}
     >
       <div className="p-4">
