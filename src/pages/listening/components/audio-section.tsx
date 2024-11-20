@@ -1,6 +1,7 @@
 import { Info, Volume2 } from "lucide-react";
-import { useState, useRef, SetStateAction } from "react";
+import { useState, useRef, SetStateAction, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
+import { useLocation } from "react-router-dom";
 
 interface AudioSectionProps {
   setEnableNext?: React.Dispatch<SetStateAction<boolean>>;
@@ -15,13 +16,22 @@ const AudioSection = ({
 } : AudioSectionProps) => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [progress, setProgress] = useState(0);
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+    }
+  }, [location.pathname])
 
 
 
 const handlePlay = () => {
     setIsCompleted(false);
-  };
+};
+  
+
 
   
 

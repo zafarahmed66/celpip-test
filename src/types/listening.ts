@@ -11,6 +11,7 @@ export interface Choice {
 }
 
 export interface Question {
+  _id: string;
   type: "mcq" | "simple";
   text: string;
   choices?: Choice[];

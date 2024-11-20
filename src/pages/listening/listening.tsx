@@ -156,7 +156,7 @@ export default function Listening() {
                 audioUrl={section.questionSets[0].questions[0].text}
               />
               <QuestionSection
-                audioSrc={section.questionSets[0].questions[0].text}
+                questionId={section.questionSets[0].questions[0]._id}
                 title={section.title}
                 question={section.questionSets[0].instructions?.[0]?.text || ""}
               options={section.questionSets[0].questions[0].choices!}

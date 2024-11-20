@@ -13,7 +13,7 @@ interface QuestionSectionProps {
   question: string;
   options: Choice[];
   title: string;
-  audioSrc: string;
+  questionId: string;
   setEnableNext: (value: boolean) => void
 }
 
@@ -21,7 +21,7 @@ const QuestionSection = ({
   options,
   question,
   title,
-  audioSrc,
+  questionId,
   setEnableNext
 }: QuestionSectionProps) => {
   const { listeningData, setUserAnswer } = useListeningContext();
@@ -30,11 +30,11 @@ const QuestionSection = ({
   }
 
   const totalQuestions = countQuestionsBySectionTitle(listeningData, title);
-  const currentQuestion = getQuestionIndex(listeningData, title, audioSrc);
+  const currentQuestion = getQuestionIndex(listeningData, title, questionId);
   const questionIndex = getFlattenedQuestionIndexListening(
     listeningData,
     title,
-    audioSrc
+    questionId
   );
 
   const handleAnswerChange = (value: string) => {

@@ -26,13 +26,13 @@ export function countQuestionsBySectionTitle(
 export function getQuestionIndex(
   test: ListeningTest,
   sectionTitle: string,
-  audioUrl: string
+  questionId: string
 ): number | null {
   let currentIndex = 0;
   for (const section of test.pages) {
     if (section.questionSets && section.title === sectionTitle) {
       currentIndex++;
-      if (section.questionSets[0].questions[0].text === audioUrl) {
+      if (section.questionSets[0].questions[0]._id === questionId) {
         return currentIndex;
       }
     }
@@ -78,14 +78,14 @@ export function flattenReadingTest(test: ReadingTest) {
 export function getFlattenedQuestionIndexListening(
   test: ListeningTest,
   sectionTitle: string,
-  audioUrl: string
+  questionId: string
 ): number | null {
   const flatQuestions = flattenListeningTest(test);
   let ansIndex = null;
   flatQuestions.forEach((question, index) => {
     if (
       question.title === sectionTitle &&
-      question.question.text === audioUrl
+      question.question._id === questionId
     ) {
       ansIndex = index;
       return;
