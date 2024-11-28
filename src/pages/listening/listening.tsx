@@ -4,7 +4,13 @@ import InstructionItem from "@/components/instruction-item";
 import InstructionVideo from "@/components/instruction-video";
 import { useListeningContext } from "@/context/ListeningContext";
 import { useEffect, useState } from "react";
-import { Navigate, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import AudioSection from "./components/audio-section";
 import QuestionSection from "./components/question-section";
 import Preparation from "./components/preparation";
@@ -26,23 +32,23 @@ export default function Listening() {
 
   const [enableNext, setEnableNext] = useState(true);
 
- const [searchParams] = useSearchParams();
- const testId = searchParams.get("testId");
+  const [searchParams] = useSearchParams();
+  const testId = searchParams.get("testId");
 
- useEffect(() => {
-   if (testId && tests) {
-     const currentTest = tests.find((test) => test._id === testId) || tests[0];
-     if (currentTest) {
-       setCurrentTest(currentTest);
-     }
-   }
- }, [testId, tests]);
+  useEffect(() => {
+    if (testId && tests) {
+      const currentTest = tests.find((test) => test._id === testId) || tests[0];
+      if (currentTest) {
+        setCurrentTest(currentTest);
+      }
+    }
+  }, [testId, tests]);
 
- useEffect(() => {
-   if (currentTest) {
-     fetchListeningData();
-   }
- }, [currentTest]);
+  useEffect(() => {
+    if (currentTest) {
+      fetchListeningData();
+    }
+  }, [currentTest]);
 
   useEffect(() => {
     if (section) {
@@ -62,23 +68,21 @@ export default function Listening() {
   const navigator = useNavigate();
 
   useEffect(() => {
-    if(section?.duration){
+    if (section?.duration) {
+      const interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev && prev > 0) {
+            return prev - 1;
+          } else {
+            clearInterval(interval);
+            navigator(next);
+            return undefined;
+          }
+        });
+      }, 1000);
 
-    const interval = setInterval(() => {
-      setTimer((prev) => {
-        if (prev && prev > 0) {
-          return prev - 1;
-        } else {
-          clearInterval(interval); 
-          navigator(next); 
-          return undefined;
-        }
-      });
-    }, 1000);
-
-      return () => clearInterval(interval); 
+      return () => clearInterval(interval);
     }
-      
   }, [next, navigator]);
 
   if (!listeningData) {
@@ -93,9 +97,6 @@ export default function Listening() {
       />
     );
   }
-
-
-
 
   return (
     <CardLayout
@@ -156,11 +157,12 @@ export default function Listening() {
                 audioUrl={section.questionSets[0].questions[0].text}
               />
               <QuestionSection
+                key={section.questionSets[0].questions[0]._id}
                 questionId={section.questionSets[0].questions[0]._id}
                 title={section.title}
                 question={section.questionSets[0].instructions?.[0]?.text || ""}
-              options={section.questionSets[0].questions[0].choices!}
-              setEnableNext={setEnableNext}
+                options={section.questionSets[0].questions[0].choices!}
+                setEnableNext={setEnableNext}
               />
             </div>
           )}

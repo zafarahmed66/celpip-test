@@ -14,7 +14,7 @@ interface QuestionSectionProps {
   options: Choice[];
   title: string;
   questionId: string;
-  setEnableNext: (value: boolean) => void
+  setEnableNext: (value: boolean) => void;
 }
 
 const QuestionSection = ({
@@ -22,7 +22,7 @@ const QuestionSection = ({
   question,
   title,
   questionId,
-  setEnableNext
+  setEnableNext,
 }: QuestionSectionProps) => {
   const { listeningData, setUserAnswer } = useListeningContext();
   if (!listeningData) {
@@ -37,13 +37,14 @@ const QuestionSection = ({
     questionId
   );
 
+
+
   const handleAnswerChange = (value: string) => {
     const selectedIndex = options.findIndex(
       (option) => option.image === value || option.text === value
     );
 
-    setEnableNext(true)
-
+    setEnableNext(true);
 
     if (questionIndex != -1) {
       setUserAnswer(questionIndex!, selectedIndex);
@@ -51,6 +52,7 @@ const QuestionSection = ({
       setUserAnswer(-1, selectedIndex);
     }
   };
+  
   return (
     <div className="border-l flex-1 pt-4 bg-customSkyBlue px-6 min-h-[75vh]">
       <div className="mb-4 text-sm text-gray-600">
