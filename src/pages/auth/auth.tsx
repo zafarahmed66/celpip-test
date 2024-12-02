@@ -144,7 +144,7 @@ export default function AuthForm() {
 
   return (
     <section className="flex flex-col items-center justify-center h-screen gap-2">
-      <Card className="w-[500px] max-w-md mx-auto">
+      <Card className="w-[95%] md:w-[500px] max-w-md mx-auto">
         <form onSubmit={handleSubmit}>
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-center">
@@ -152,7 +152,7 @@ export default function AuthForm() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-         {isSignUp &&   <div className="grid grid-cols-2 gap-2">
+         {isSignUp &&   <div className="grid gap-2 grids-col-1 md:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-xs text-gray-500" htmlFor="email">
                   First Name
@@ -273,7 +273,7 @@ export default function AuthForm() {
           </CardFooter>
         </form>
       </Card>
-      <div className="w-[400px]">
+      <div className="w-[95vw] md:w-[400px]">
         {!isSignUp && (
           <div className="w-full mb-4 text-center">
             <div className="relative">
