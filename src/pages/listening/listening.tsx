@@ -132,7 +132,7 @@ export default function Listening() {
           />
         )}
         {section.instructions && section.instructions[0]?.audio && (
-          <div className="flex text-lg justify-evenly text-customLightBlue">
+          <div className="flex bg-customLighGray text-lg min-h-[75vh] justify-evenly text-customLightBlue">
             <AudioSection
               audioInfo={section.description || ""}
               audioUrl={section.instructions[0].audio}
@@ -150,7 +150,7 @@ export default function Listening() {
           section.questionSets[0].questions[0].type === "mcq" &&
           section.questionSets &&
           section.questionSets[0].questions.length <= 1 && (
-            <div className="flex text-lg justify-evenly text-customLightBlue">
+            <div className="flex flex-col text-lg md:flex-row justify-evenly text-customLightBlue">
               <AudioSection
                 audioInfo={section.instructions?.[0]?.text || ""}
                 setEnableNext={setEnableNext}

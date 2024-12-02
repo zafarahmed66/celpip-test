@@ -12,8 +12,8 @@ interface AudioSectionProps {
 const AudioSection = ({
   setEnableNext,
   audioInfo,
-  audioUrl
-} : AudioSectionProps) => {
+  audioUrl,
+}: AudioSectionProps) => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [progress, setProgress] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -23,17 +23,11 @@ const AudioSection = ({
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
     }
-  }, [location.pathname])
+  }, [location.pathname]);
 
-
-
-const handlePlay = () => {
+  const handlePlay = () => {
     setIsCompleted(false);
-};
-  
-
-
-  
+  };
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
@@ -45,48 +39,46 @@ const handlePlay = () => {
 
   const handleEnd = () => {
     setIsCompleted(true);
-    if(setEnableNext){
+    if (setEnableNext) {
       setEnableNext(true);
     }
-  }
-
-  
+  };
 
   return (
-    <div className="flex-1 py-4 px-6 bg-customLighGray min-h-[75vh]">
+    <div className="flex-1 px-6 py-4 overflow-x-hidden bg-customLighGray">
       <div className="flex items-start gap-2 mb-4 tracking-tight text-customLightBlue">
-        <Info className="self-start " />
-        <h3 className="leading-tight">{audioInfo || "Listen to a short statement. You will hear it only once."}</h3>
+        <Info className="self-start flex-shrink-0" />
+        <h3 className="text-sm leading-tight md:text-base">
+          {audioInfo ||
+            "Listen to a short statement. You will hear it only once."}
+        </h3>
       </div>
 
-
-      <div className="py-2">
-        <div className="flex items-center justify-between gap-8 px-10 py-6 mx-auto rounded-md bg-customGray w-fit">
+        <div className="flex items-center justify-between gap-8 px-10 py-8 mx-auto rounded-md md:flex-col md:flex-row bg-customGray w-fit">
           <div className="p-2 bg-white rounded-sm">
             {!isCompleted ? <Volume2 /> : <Info />}
           </div>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center text-sm md:text-base">
             <span>
               {!isCompleted ? "Playing..." : `Click "NEXT" to continue.`}
             </span>
             {!isCompleted && (
               <Progress
                 value={progress}
-                className="w-[200px] bg-white rounded-none h-4 mt-2"
+                className="w-[100px] md:w-[200px] bg-white rounded-none h-4 mt-2"
               />
             )}
           </div>
         </div>
-      </div>
 
       <audio
         ref={audioRef}
         controls
         autoPlay
         src={audioUrl}
-        className="w-[400px] mb-4 mx-auto"
+        className="mx-auto mb-4 "
         onPlay={handlePlay}
-        onTimeUpdate={handleTimeUpdate} 
+        onTimeUpdate={handleTimeUpdate}
         onEnded={handleEnd}
       />
     </div>

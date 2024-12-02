@@ -78,10 +78,10 @@ const ListeningResult = () => {
     >
       <div className="px-8 py-2 space-y-16">
         <Card className="border border-b-0 border-gray-300 rounded-none">
-          <h1 className="text-center py-2 bg-[#CECBC7] font-medium">
+          <h1 className="text-center py-2 bg-[#CECBC7] font-medium text-xs md:text-sm p-2">
             HZad Education-GENERAL LISTENING TEST
           </h1>
-          <Table>
+          <Table className="text-xs md:text-sm">
             <TableHeader>
               <TableHead className="text-center text-black">
                 Number of Questions
@@ -109,7 +109,7 @@ const ListeningResult = () => {
           </Table>
         </Card>
 
-        <Card className="border-2 border-gray-300 rounded-none bg-customLighGray">
+        <Card className="text-sm border-2 border-gray-300 rounded-none bg-customLighGray md:text-sm">
           <CardHeader className="py-4 font-semibold text-center">
             A Note About Your HZad Education Score
           </CardHeader>

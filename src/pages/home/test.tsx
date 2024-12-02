@@ -22,7 +22,7 @@ export default function Test() {
           {currentTest?.title}
         </CardHeader>
         <CardContent className="min-h-[80vh]">
-          <div className="p-6 space-y-4 text-sm text-gray-600">
+          <div className="p-2 py-4 space-y-4 text-sm text-gray-600 md:p-6">
             <div className="whitespace-pre-wrap">{currentTest.description}</div>
             <Separator />
             <div className="flex justify-center">
@@ -38,7 +38,7 @@ export default function Test() {
               <span className="p-1 px-2 text-white bg-customBlue rounded-2xl">
                 NOTE
               </span>
-              <span className="block sm:inline">
+              <span className="block text-xs md:text-sm sm:inline">
                 {" "}
                 In response to ongoing research and development, changes may
                 occasionally be made to the HZad Education Test. Check the HZad

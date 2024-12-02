@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/table";
 import { flattenReadingTest, getNextModule } from "@/lib/utils";
 import CardLayout from "@/components/card-layout";
-import { Navigate, useLocation, useSearchParams } from "react-router-dom";
+import {  Navigate, useLocation, useSearchParams } from "react-router-dom";
 import { useReadingContext } from "@/context/ReadingContext";
 import { useTestContext } from "@/context/TestContext";
-import { toast } from "sonner";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 const ReadingResult = () => {
   const { userAnswers, readingData, fetchReadingData } = useReadingContext();
@@ -62,10 +62,11 @@ const ReadingResult = () => {
   };
 
   const nextModule = getNextModule("reading", currentTest!);
-  if (nextModule === "/") {
-    toast.success("All test are completed!");
-    return <Navigate to="/" />;
-  }
+    if (nextModule === "/") {
+      toast.success("All test are completed!");
+      return <Navigate to="/" />;
+    }
+  
 
   return (
     <CardLayout
@@ -75,10 +76,10 @@ const ReadingResult = () => {
     >
       <div className="px-8 py-2 space-y-16">
         <Card className="border border-b-0 border-gray-300 rounded-none">
-          <h1 className="text-center py-2 bg-[#CECBC7] font-medium">
+          <h1 className="text-center py-2 bg-[#CECBC7] font-medium text-xs md:text-sm p-2">
             HZad Education-GENERAL READING TEST
           </h1>
-          <Table>
+          <Table className="p-2 text-xs md:text-sm">
             <TableHeader>
               <TableHead className="text-center text-black">
                 Number of Questions
@@ -106,7 +107,7 @@ const ReadingResult = () => {
           </Table>
         </Card>
 
-        <Card className="border-2 border-gray-300 rounded-none bg-customLighGray">
+        <Card className="text-xs border-2 border-gray-300 rounded-none bg-customLighGray md:text-sm">
           <CardHeader className="py-4 font-semibold text-center">
             A Note About Your HZad Education Score
           </CardHeader>

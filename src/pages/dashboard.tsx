@@ -21,7 +21,7 @@ export default function Dashboard() {
   }, [currentTest]);
   return (
     <section>
-      <div className="flex flex-col items-center max-w-5xl gap-8 p-8 mx-auto my-8 bg-white shadow-sm">
+      <div className="flex flex-col items-center max-w-5xl gap-8 p-4 mx-auto my-8 bg-white shadow-sm md:p-8">
         <div>
           <img src={logo} alt="Logo" className="object-cover" />
         </div>

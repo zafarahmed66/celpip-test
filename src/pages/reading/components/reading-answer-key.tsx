@@ -56,14 +56,14 @@ export default function ReadingAnswerKeyPage() {
           <Badge className="rounded-full bg-customBlue hover:bg-customBlue h-fit">
             NOTE
           </Badge>
-          <AlertDescription className="text-gray-600">
+          <AlertDescription className="text-xs text-gray-600 md:text-sm">
             Use the back arrow in your browser to return to the page you just
             came from. The back arrow is located at the top left of your screen,
             next to the address bar.
           </AlertDescription>
         </Alert>
 
-        <Table className="text-sm text-gray-600">
+        <Table className="text-xs text-gray-600 md:text-sm">
           <TableHeader>
             <TableRow>
               <TableHead>Question</TableHead>
@@ -127,10 +127,10 @@ export default function ReadingAnswerKeyPage() {
                     </TableCell>
                   </TableRow>
                   {index === data.length - 1 && (
-                    <div className="pl-2 my-2 text-sm">
+                    <div className="pl-2 my-2">
                       <Link
                         to={`/reading/${getActualQuestionIndexReading(readingData, prevItem.title)?.toString()}`}
-                        className="text-customBlue hover:underline"
+                        className="text-xs md:text-sm text-customBlue hover:underline"
                       >
                         Return to {prevItem.title}
                       </Link>

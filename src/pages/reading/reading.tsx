@@ -118,7 +118,7 @@ let questionNumber = 0;
                 ""
               }
             />
-            <ScrollArea className="p-4 space-y-6 border-l border-gray-300 bg-customSkyBlue h-[75vh] pb-12">
+            <ScrollArea className="p-4 space-y-6 border-l border-gray-300 bg-customSkyBlue min-h-[75vh] pb-12">
               {section.questionSets.map((question, index) => {
                 const startNumber = questionNumber + 1; 
                   questionNumber += question.questions.length; 

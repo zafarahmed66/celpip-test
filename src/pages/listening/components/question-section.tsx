@@ -37,8 +37,6 @@ const QuestionSection = ({
     questionId
   );
 
-
-
   const handleAnswerChange = (value: string) => {
     const selectedIndex = options.findIndex(
       (option) => option.image === value || option.text === value
@@ -52,9 +50,9 @@ const QuestionSection = ({
       setUserAnswer(-1, selectedIndex);
     }
   };
-  
+
   return (
-    <div className="border-l flex-1 pt-4 bg-customSkyBlue px-6 min-h-[75vh]">
+    <div className="border-l flex-1 pt-4 bg-customSkyBlue px-6 min-h-[75vh] text-sm md:text-base">
       <div className="mb-4 text-sm text-gray-600">
         {`Question ${currentQuestion} of ${totalQuestions}`}
       </div>
@@ -75,13 +73,20 @@ const QuestionSection = ({
                 id={option.text || option.image}
               />
               {option.text && (
-                <Label className="cursor-pointer" htmlFor={option.text}>
+                <Label
+                  className="text-xs cursor-pointer md:text-base"
+                  htmlFor={option.text}
+                >
                   {option.text}
                 </Label>
               )}
               {option.image && (
                 <Label className="cursor-pointer" htmlFor={option.image}>
-                  <img src={option.image} className="w-44" alt="option" />
+                  <img
+                    src={option.image}
+                    className="md:w-44 w-22"
+                    alt="option"
+                  />
                 </Label>
               )}
             </div>

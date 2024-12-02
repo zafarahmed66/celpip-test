@@ -32,16 +32,16 @@ const Preparation = ({
     
   
   return (
-        <div className="py-4 px-8">
+        <div className="px-8 py-4">
         <div className="flex items-start gap-2 mb-4 tracking-tight text-customLightBlue">
-        <Info className="self-start " />
-        <h3 className="tracking-wide font-medium">{info}</h3>
+        <Info className="self-start flex-shrink-0" />
+        <h3 className="text-sm font-medium tracking-wide md:text-base">{info}</h3>
       </div>
-         <div className="mx-auto bg-gray-200 py-6 px-10 rounded-md flex items-center justify-between w-fit gap-8">
+         <div className="flex items-center justify-between gap-8 px-10 py-6 mx-auto bg-gray-200 rounded-md w-fit">
           <Clock />
-          <div className="flex flex-col justify-center items-center">
-            <span className="font-semibold">Preparation Time</span>
-            <span className="text-blue-600">{timer}</span>
+          <div className="flex flex-col items-center justify-center">
+            <span className="text-sm font-semibold md:text-base">Preparation Time</span>
+            <span className="text-sm text-blue-600 md:text-base">{timer}</span>
           </div>
         </div>
         </div>

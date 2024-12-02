@@ -80,7 +80,7 @@ export default function CardLayout({
             "bg-gray-200 py-2 border-gray-300 border-b space-y-4"
           )}
         >
-          <div className="flex justify-between pt-1">
+          <div className="flex justify-between gap-2 pt-1">
             {currentTest?.modules.map((module) => (
               <ConfirmationModal {...module} />
             ))}
@@ -88,16 +88,14 @@ export default function CardLayout({
           <div className="flex flex-row items-center justify-between">
             <h2
               className={cn(
-                "text-gray-600",
-                title?.length > 50 && "text-sm",
-                title?.length > 70 && "text-xs"
+                "text-gray-600 text-xs md:text-sm md:pb-0 pb-10",
               )}
             >
               {title}
             </h2>
-            <div className="relative gap-4 text-sm">
+            <div className="relative gap-4 text-xs md:text-sm">
               {recordingTime !== undefined && (
-                <p className="absolute right-80 top-2 w-[180px]">
+                <p className="absolute right-28 md:right-80 top-5 md:top-2 w-[180px]">
                   Recording:{" "}
                   <span
                     className={cn(
@@ -114,7 +112,7 @@ export default function CardLayout({
               {timer !== undefined && (
                 <p
                   className={cn(
-                    "absolute right-32 top-2 w-[190px]",
+                    "absolute right-[103px] md:right-32 top-10 md:top-2 w-[190px]",
                     location.pathname.includes("speaking") && "w-[190px]"
                   )}
                 >
@@ -130,18 +128,18 @@ export default function CardLayout({
                 </p>
               )}
               <div className="flex gap-2">
-                <Button
+                <Button 
                   variant={"outline"}
                   disabled={isPrevDisabled}
                   onClick={() => prevLink && window.history.back()}
                 >
-                  <ChevronLeft />
+                  <ChevronLeft className="size-6" />
                 </Button>
 
                 {!isLastPage && enableNext && (
                   <Link to={nextLink!}>
                     <Button variant={"outline"}>
-                      <ChevronRight />
+                      <ChevronRight className="size-6" />
                     </Button>
                   </Link>
                 )}
@@ -160,7 +158,7 @@ export default function CardLayout({
             )}
           >
             <Link to={answerKey}>
-              <Button className="text-gray-600 bg-white hover:bg-customLighGray hover:text-gray-600">
+              <Button className="text-xs text-gray-600 bg-white md:text-base hover:bg-customLighGray hover:text-gray-600">
                 Answer Key
               </Button>
             </Link>
@@ -189,7 +187,7 @@ function ConfirmationModal(module : Module) {
       <DialogTrigger asChild>
         <Button
           // disabled={location.pathname.includes(module.type.toLowerCase())}
-          className={`px-12 ${location.pathname.includes(module.type.toLowerCase()) && 'pointer-events-none'}`}
+          className={`text-xs md:text-base  px-2 md:px-12 ${location.pathname.includes(module.type.toLowerCase()) && 'pointer-events-none'}`}
           variant={
             location.pathname.includes(module.type.toLowerCase())
               ? "default"
@@ -200,7 +198,7 @@ function ConfirmationModal(module : Module) {
           {module.type}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="w-[90%] md:max-w-md">
         <DialogHeader>
           <DialogDescription>
             Are you sure you want to abandon current test and initiate{" "}
@@ -209,7 +207,7 @@ function ConfirmationModal(module : Module) {
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="mx-auto sm:justify-start">
+        <DialogFooter className="gap-2 mx-auto sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="outline">
               Cancel

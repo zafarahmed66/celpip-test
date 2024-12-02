@@ -10,10 +10,10 @@ export const ReadingPassage: React.FC<ReadingPassageProps> = ({
   passageInfo,
 }) => {
   return (
-    <ScrollArea className="bg-customLighGray p-4 h-[75vh]">
+    <ScrollArea className="bg-customLighGray p-4 min-h-[75vh]">
       {passageInfo && (
-        <h2 className="mb-4 font-medium text-customLightBlue">
-          <span className="inline-block w-6 h-6 mr-2 text-center text-white rounded-full bg-customLightBlue">
+        <h2 className="mb-4 text-sm font-medium text-customLightBlue md:text-base">
+          <span className="inline-block mr-2 text-xs text-center text-white rounded-full size-4 md:text-base md:size-6 bg-customLightBlue">
             i
           </span>
           {passageInfo}
@@ -21,7 +21,7 @@ export const ReadingPassage: React.FC<ReadingPassageProps> = ({
       )}
       {content.startsWith("http") ?
      <img src={content} />
-     : <div className="text-sm text-gray-600 whitespace-pre-wrap">{content}</div>}
+     : <div className="text-xs text-gray-600 whitespace-pre-wrap md:text-sm">{content}</div>}
     </ScrollArea>
   );
 };

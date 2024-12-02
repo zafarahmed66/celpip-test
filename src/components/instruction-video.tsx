@@ -11,14 +11,14 @@ const InstructionVideo = ({
 } : InstructionVideoProps) => {
   return (
    
-      <div className="min-h-[75vh] px-8 pt-8  bg-customLighGray">
+      <div className="min-h-[75vh] px-4 pt-4  bg-customLighGray">
         {description && <InstructionHeader
         text={description}
         />}
         <video
           controls
           src={videoSrc}
-          className="w-full h-[50vh] mt-10"
+          className="w-full h-[50vh] -mt-10 md:mt-10"
           autoPlay
         />
       </div>

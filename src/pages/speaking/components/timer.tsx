@@ -100,7 +100,7 @@ const Timer = ({ preparationTime, recordingTime }: TimerProps) => {
   };
 
   return (
-    <div className="py-2">
+    <div className="py-2 text-sm md:text-base">
       {!isRecording && (
         <div className="flex items-center justify-between gap-8 px-10 py-6 mx-auto bg-gray-200 rounded-md w-fit">
           <div className="p-2 bg-white rounded-sm">

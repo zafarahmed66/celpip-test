@@ -42,8 +42,8 @@ const QuestionnaireComponent = ({
   return (
     <div className="p-6 bg-customSkyBlue min-h-[75vh]">
       <div className="flex items-center gap-2 mb-4 text-customLightBlue">
-        <Info size={24} />
-        <h2 className="font-medium">
+        <Info size={24} className="flex-shrink-0" />
+        <h2 className="text-sm font-medium md:text-base">
           Choose the best way to complete each statement from the drop-down menu
           (▼).
         </h2>
@@ -55,7 +55,7 @@ const QuestionnaireComponent = ({
           return (
             <li
               key={index}
-              className="flex items-center gap-2 text-sm text-gray-600"
+              className="flex items-center gap-2 text-xs text-gray-600 md:text-sm"
             >
               <span className="">{index + 1}.</span>
               {textParts.map((part, i) => (
@@ -67,13 +67,13 @@ const QuestionnaireComponent = ({
                         handleChange(value, question.text, question.choices!)
                       }
                     >
-                      <SelectTrigger className="text-xl font-semibold bg-white border-none rounded-none min-w-20 w-fit focus:outline-none focus:ring-0">
+                      <SelectTrigger className="text-xs font-semibold bg-white border-none rounded-none md:text-xl min-w-20 w-fit focus:outline-none focus:ring-0">
                         <SelectValue placeholder="" />
                       </SelectTrigger>
                       <SelectContent>
                         {question.choices &&
                           question.choices.map((option, index) => (
-                            <SelectItem key={index} value={option.text!}>
+                            <SelectItem key={index} value={option.text!} className="text-xs md:text-base">
                               {option.text}
                             </SelectItem>
                           ))}

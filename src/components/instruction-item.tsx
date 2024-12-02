@@ -13,13 +13,13 @@ export default function InstructionItem({
 }: InstructionItemProps) {
   
   return (
-    <ul className={cn("list-disc pl-20 mb-4 w-[70%]",  instructions[0].image && "pl-0 w-full")}>
+    <ul className={cn("list-disc md:pl-20 mb-4 md:w-[70%] p-8",  instructions[0].image && "pl-0 w-full")}>
       {instructions.map((instruction, index) => (
         <>
           {instruction.text && (
             <li
               className={cn(
-                "py-4 font-medium text-customLightBlue",
+                "py-4 font-medium text-customLightBlue text-sm md:text-base",
                 index != instructions.length - 1 && "border-b border-dashed"
               )}
               key={index}

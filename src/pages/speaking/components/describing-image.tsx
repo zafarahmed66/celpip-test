@@ -15,8 +15,8 @@ export default function DescribingImage({
 } : DescribingImageProps) {
   return (
     <div>
-      <h2 className="font-medium mb-4 text-customLightBlue">
-        <span className="inline-block bg-customLightBlue text-white rounded-full w-6 h-6 text-center mr-2">
+      <h2 className="mb-4 text-sm font-medium text-customLightBlue md:text-base">
+        <span className="inline-block w-6 h-6 mr-2 text-center text-white rounded-full bg-customLightBlue">
           i
         </span>
         {title}

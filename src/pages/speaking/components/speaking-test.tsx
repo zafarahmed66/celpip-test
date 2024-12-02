@@ -18,7 +18,7 @@ export default function SpeakingTest({
    
   return (
     <div>
-      <h2 className="mb-4 font-medium text-customLightBlue">
+      <h2 className="mb-4 text-sm font-medium text-customLightBlue md:text-base">
         <span className="inline-block w-6 h-6 mr-2 text-center text-white rounded-full bg-customLightBlue">
           i
         </span>
@@ -26,7 +26,7 @@ export default function SpeakingTest({
       </h2>
       {
         additionalInfo?.map((info, index) => (
-          <div key={index}>{ info.text}</div>
+          <div key={index} className="text-sm md:text-base">{ info.text}</div>
       ))
 
       }

@@ -53,21 +53,21 @@ export default function ListeningAnswerKeyPage() {
   return (
     <CardLayout
       title={`${currentTest?.title} - Listening Answer Key`}
-      nextLink={"/listening/result"}
+      nextLink={`/listening/result?testId=${testId}&attemptId=${attemptId}`}
     >
       <div className="p-4">
         <Alert className="flex gap-2 mb-4 border rounded-sm bg-customGray border-customBlue">
-          <Badge className="rounded-full bg-customBlue hover:bg-customBlue h-fit">
+          <Badge className="text-xs rounded-full bg-customBlue hover:bg-customBlue h-fit md:text-sm">
             NOTE
           </Badge>
-          <AlertDescription className="text-gray-600">
+          <AlertDescription className="text-xs text-gray-600 md:text-sm">
             Use the back arrow in your browser to return to the page you just
             came from. The back arrow is located at the top left of your screen,
             next to the address bar.
           </AlertDescription>
         </Alert>
 
-        <Table className="text-sm text-gray-600">
+        <Table className="text-xs text-gray-600 md:text-sm">
           <TableHeader>
             <TableRow>
               <TableHead>Question</TableHead>
@@ -91,7 +91,6 @@ export default function ListeningAnswerKeyPage() {
               if (prevItem && item.title !== prevItem.title) {
                 currentIndex = 1;
               }
-
 
               return (
                 <>
@@ -134,10 +133,12 @@ export default function ListeningAnswerKeyPage() {
                                 className="inline-block ml-2 text-green-500"
                               />
                             ) : (
-                            answerIndex >=0 &&  <X
-                                size={20}
-                                className="inline-block ml-2 text-red-500"
-                              />
+                              answerIndex >= 0 && (
+                                <X
+                                  size={20}
+                                  className="inline-block ml-2 text-red-500"
+                                />
+                              )
                             )}
                           </>
                         ) : (
@@ -149,10 +150,12 @@ export default function ListeningAnswerKeyPage() {
                                 className="inline-block ml-2 text-green-500"
                               />
                             ) : (
-                            answerIndex >= 0 &&  <X
-                                size={20}
-                                className="inline-block ml-2 text-red-500"
-                              />
+                              answerIndex >= 0 && (
+                                <X
+                                  size={20}
+                                  className="inline-block ml-2 text-red-500"
+                                />
+                              )
                             )}
                           </>
                         )}

@@ -18,8 +18,8 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
   }
   return (
     <div>
-      <h2 className="mt-2 mb-4 font-medium text-customLightBlue">
-        <span className="inline-block w-6 h-6 mr-2 text-center text-white rounded-full bg-customLightBlue">
+      <h2 className="mt-2 mb-4 text-sm font-medium text-customLightBlue md:text-base">
+        <span className="inline-block mr-2 text-center text-white rounded-full size-4 md:size-6 bg-customLightBlue">
           i
         </span>
         {questionInfo}
@@ -32,7 +32,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
           return (
             <div
               key={index}
-              className="flex flex-wrap items-center gap-2 text-sm text-gray-600"
+              className="flex flex-wrap items-center gap-2 text-xs text-gray-600 md:text-sm"
             >
               <span className="">{questionNumber}.</span>
               {textParts.map((part, i) => (

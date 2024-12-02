@@ -56,7 +56,7 @@ export default function ComparingImage({
 console.log()
   return (
     <div>
-      <div className="mb-4 font-medium text-customLightBlue">
+      <div className="mb-4 text-sm font-medium text-customLightBlue md:text-base">
         <span className="inline-block w-6 h-6 mr-2 text-center text-white rounded-full bg-customLightBlue">
           i
         </span>
