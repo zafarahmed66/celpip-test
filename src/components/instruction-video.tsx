@@ -8,7 +8,8 @@ interface InstructionVideoProps {
 const InstructionVideo = ({
   description,
   videoSrc
-} : InstructionVideoProps) => {
+}: InstructionVideoProps) => {
+  console.log(videoSrc)
   return (
    
       <div className="min-h-[75vh] px-4 pt-4  bg-customLighGray">
@@ -19,8 +20,8 @@ const InstructionVideo = ({
           controls
           src={videoSrc}
           className="w-full h-[200px] md:h-[50vh] mt-10"
-          autoPlay
-        />
+          playsInline
+      />
       </div>
   );
 };
