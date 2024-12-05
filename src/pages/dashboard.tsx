@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
-import logo from "../../public/logo-vertical.png";
-import { Link } from "react-router-dom";
-import { useTestContext } from "@/context/TestContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useTestContext } from "@/context/TestContext";
 import { Test } from "@/types/test";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import logo from "../../public/logo-vertical.png";
 
 export default function Dashboard() {
   const { currentTest, tests, setAttemptId, setAttemptTestData } =
@@ -38,7 +38,10 @@ export default function Dashboard() {
             the key factors that HZad Education raters consider when they assess
             Writing and Speaking responses.
           </p>
-         
+          <p className="text-sm text-red-500">
+            Note: Unauthorized distribution or sharing of these files is
+            prohibited as per Copyright and punishable by law.
+          </p>
         </div>
         {currentTest ? (
           <div className="flex gap-2">
@@ -53,7 +56,6 @@ export default function Dashboard() {
               label="Start Test"
               tests={tests!}
             />
-           
           </div>
         )}
         <div className="space-y-4 text-sm text-center text-customBlue">
