@@ -9,7 +9,6 @@ const InstructionVideo = ({
   description,
   videoSrc
 }: InstructionVideoProps) => {
-  console.log(videoSrc)
   return (
    
       <div className="min-h-[75vh] px-4 pt-4  bg-customLighGray">

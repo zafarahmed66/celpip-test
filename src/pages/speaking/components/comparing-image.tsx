@@ -73,7 +73,7 @@ console.log()
         <Card
           onClick={() => handleImageSelect(image1)}
           className={cn(
-            "border border-black rounded-sm h-[500px] cursor-pointer",
+            "border border-black rounded-sm cursor-pointer",
             selectedChoiceRef.current === image1 && "bg-customDarkSkyBlue"
           )}
         >
@@ -100,7 +100,7 @@ console.log()
         <Card
           onClick={() => handleImageSelect(image2)}
           className={cn(
-            "border border-black rounded-sm h-[500px] cursor-pointer",
+            "border border-black rounded-sm cursor-pointer",
             selectedChoiceRef.current === image2 && "bg-customDarkSkyBlue",
             timer === 0 && "bg-customLightGreen"
           )}

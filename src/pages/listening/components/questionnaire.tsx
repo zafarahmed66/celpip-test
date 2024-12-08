@@ -70,7 +70,7 @@ const QuestionnaireComponent = ({
                       <SelectTrigger className="text-xs font-semibold bg-white border-none rounded-none md:text-xl min-w-20 w-fit focus:outline-none focus:ring-0">
                         <SelectValue placeholder="" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="w-[300px] md:w-full">
                         {question.choices &&
                           question.choices.map((option, index) => (
                             <SelectItem key={index} value={option.text!} className="text-xs md:text-base">

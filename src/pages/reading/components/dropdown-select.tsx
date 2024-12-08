@@ -47,7 +47,7 @@ export const DropdownSelect: React.FC<DropdownSelectProps> = ({ question }) => {
       >
         <SelectValue placeholder="" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="w-[300px] md:w-full">
         {question.choices.map((option, index) => (
           <SelectItem
             className="text-xs md:text-sm"
