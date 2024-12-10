@@ -1,0 +1,32 @@
+name: Deploy To Prod
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Pull Vercel Environment Variables
+        run: vercel pull --yes --environment=production --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_ORG_ID }}
+
+      - name: Build Project
+        run: vercel build --yes --prod
+
+      - name: Deploy to Vercel Action
+        uses: BetaHuhn/deploy-to-vercel-action@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_SCOPE: ${{secrets.VERCEL_ORG_ID}}
+          PRODUCTION: true
+          GITHUB_DEPLOYMENT_ENV: Production
+          PREBUILT: true
