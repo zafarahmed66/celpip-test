@@ -42,15 +42,15 @@ export const DropdownSelect: React.FC<DropdownSelectProps> = ({ question }) => {
     >
       <SelectTrigger
         className={cn(
-          "min-w-20 h-6 w-fit rounded-none border-none bg-white font-semibold focus:outline-none focus:ring-0 text-xs md:text-xl"
+          "min-w-20 h-6 md:max-w-full w-fit max-w-[250px]  rounded-none border-none bg-white font-semibold focus:outline-none focus:ring-0 text-xs md:text-xl "
         )}
       >
-        <SelectValue placeholder="" />
+        <SelectValue placeholder=""  />
       </SelectTrigger>
-      <SelectContent className="w-[300px] md:w-full">
+      <SelectContent className="w-[300px] md:w-full ">
         {question.choices.map((option, index) => (
           <SelectItem
-            className="text-xs md:text-sm"
+            className="text-xs md:text-sm "
             key={index}
             value={option.text}
           >
