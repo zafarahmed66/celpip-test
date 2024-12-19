@@ -26,7 +26,9 @@ export default function ComparingImage({
   const [isPreparationPhase, setIsPreparationPhase] = useState(true);
 
   const handleImageSelect = (image: Choice) => {
-    selectedChoiceRef.current = image;
+    if (isPreparationPhase) {
+      selectedChoiceRef.current = image;
+    }
   };
 
   useEffect(() => {
@@ -53,7 +55,7 @@ export default function ComparingImage({
     return () => clearInterval(interval);
   }, []);
 
-console.log()
+  console.log();
   return (
     <div>
       <div className="mb-4 text-sm font-medium text-customLightBlue md:text-base">
@@ -121,14 +123,14 @@ console.log()
             />
             <h3 className="text-sm text-gray-600">{image2.title}</h3>
             <div className="mt-4 text-sm text-gray-600 whitespace-pre-wrap list-inside">
-              {image1.text}
+              {image2.text}
             </div>
           </CardContent>
         </Card>
       </div>
 
       {isPreparationPhase && (
-        <Timer preparationTime={selectionTime} recordingTime={recordingTime} />
+        <Timer preparationTime={prepartionTime} recordingTime={recordingTime} />
       )}
       {!isPreparationPhase && (
         <Timer preparationTime={prepartionTime} recordingTime={recordingTime} />
